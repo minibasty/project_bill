@@ -1,0 +1,269 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0033)http://www.thaifinger.net/sms.php -->
+<HTML><HEAD><TITLE>plenarakjung</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-874">
+<META http-equiv=EXPIRES content=0>
+<META content=DOCUMENT name=RESOURCE-TYPE>
+<META content=GLOBAL name=DISTRIBUTION>
+<META content="Copyright (c) 2005" name=COPYRIGHT>
+<META 
+content="sms,SMS,thai sms,messaging,free sms,short message,send sms,thai free sms,short message service,ข้อความ,ข้อความสั้น,ส่งข้อความ,ส่งข้อความฟรี" 
+name=KEYWORDS>
+<META 
+content="sms,SMS,thai sms,messaging,free sms,short message,send sms,thai free sms,short message service,ข้อความ,ข้อความสั้น,ส่งข้อความ,ส่งข้อความฟรี" 
+name=DESCRIPTION>
+<META content="1 DAYS" name=REVISIT-AFTER>
+ <link rel="stylesheet" href="css/style.css">
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+
+	 <script src="https://unpkg.com/bootstrap@4.1.0/dist/js/bootstrap.min.js"></script>
+ 
+<SCRIPT language=JavaScript>
+<!--
+function sellist(jglist) {
+				if(document.frmsend.glist.value == "" ){
+					document.frmsend.glist.value+=jglist
+				}else{
+					 document.frmsend.glist.value+=","+jglist
+				}
+	}
+
+function selmsg(jmsg) {
+					document.frmsend.msg.value=jmsg
+	}
+
+function delcont(jdgrid) {
+				if (confirm("ยืนยันการลบข้อมูล ?") ){
+					window.location.href="member.php?dgrid="+jdgrid
+				}
+}
+
+
+function setcount () {
+		enable = setInterval("counter()",100);
+	}
+
+function counter() {
+		var chal, mpart;
+		chal = document.frmsend.msg.value.length;
+		document.frmsend.lang.value="eng"
+		for(i=0;i<chal;i++){											  	
+				if(document.frmsend.msg.value.charCodeAt(i)>160){
+						document.frmsend.lang.value="tha"								
+				}
+		} 
+
+		if(document.frmsend.lang.value== "eng"){
+			onemsg = 160
+		}else{
+			onemsg = 70
+		}
+		mpart = parseInt(chal / onemsg);
+		if ((chal % onemsg ) > 0)
+			mpart += 1;
+		document.frmsend.maxcha.value = onemsg;
+		document.frmsend.restcha.value = onemsg-chal;
+		c=document.frmsend.glist.value.split(",")
+		n = c.length
+		document.frmsend.musecre.value = n
+		jmusecre.innerText=n
+	}
+
+function checkf(){
+		if("y"!="y"){
+				alert("ขณะนี้ไม่สามารถส่งข้อความได้");
+				return false;
+		}
+
+		var jrest=parseInt(document.frmsend.restcre.value)
+		var jmuse=parseInt(document.frmsend.musecre.value)
+		if(jrest<jmuse){
+				alert("เครดิตไม่เพียงพอสำหรับการส่งข้อความนี้");
+				return false;
+		}
+	
+		if(document.frmsend.glist.value== "" || document.frmsend.glist.value == " "){
+				alert("กรุณาใส่ Phone Number");
+				return false;
+		}
+		var jdest = document.frmsend.glist.value;
+		var len = jdest.length;
+		for(var i=0 ; i<len ; i++){
+			var digit = jdest.charAt(i);
+			if(!(digit >="0" && digit <="9") && !(digit==",")){
+				alert("กรุณาใส่ Phone Number ด้วยตัวเลข และคั่นด้วยคอมม่า(,)เท่านั้น");
+				return false;
+			}
+		}
+		if(document.frmsend.glist.value.length>1099){
+				alert("Phone Number ต้องไม่เกิน 1099 ตัวอักษร");
+				return false;
+		}
+		if(document.frmsend.msg.value== "" || document.frmsend.msg.value == " "){
+				alert("กรุณาใส่ Message ที่ต้องการส่ง");
+				return false;
+		}
+		if(document.frmsend.msg.value.length>parseInt(document.frmsend.maxcha.value)){
+				alert("Message มีความยาวได้ไม่เกิน " + document.frmsend.maxcha.value + " ตัวอักษร");
+				return false;
+		}
+		document.frmsend.submit();
+		return true;
+}
+
+</SCRIPT>
+<script>
+var sc = document.getElementById("sc");
+$.ajax({
+		
+        url: "getData.php",
+        type: "POST",
+        success: function(result) {
+             console.log(result)
+            var data2 = '';
+            var obj = jQuery.parseJSON(result);
+            if (obj != '') {
+                //$("#myTable tbody tr:not(:first-child)").remove();
+                $("#myBody").empty();
+				console.log(result);
+                $.each(obj, function(key, val) {
+                    var id = val['id'];
+					var name = val['name'];
+                    var amper = val['amper'];
+					var province = val['province'];
+					var simno = val['simno'];
+                    var user = val['user'];
+                    var zipcode = val['zipcode'];
+					var tel_contact = val['tel_contact'];
+					var amperArr = amper.split("-");
+					amper.toString();
+                    var tr = "<tr>";
+                    tr = tr + "<td id='" + val["id"] + "' '><input type='text' name='id' id='id" + val["id"] + "' value='" + val["id"] + "'</td>";
+                    tr = tr + "<td>" + val["name"] + "</td>";
+                    tr = tr + "<td>" + val["amper"] + "</td>";
+					tr = tr + "<td>" + val["user"] + "</td>";
+                    tr = tr + "<td>" + val["zipcode"] + "</td>";
+					tr = tr + "<td>" + tel_contact + "</td>";
+					tr = tr + "<td><INPUT class=buto1 type='button' value='เลือก'  name='sendFrm' onclick='sendForm("+ id +"," + tel_contact + ")'></td>";
+                    tr = tr + "</tr>";
+                    $('#myTable > tbody:last').append(tr);
+                });
+            }
+        }
+    });
+	
+	$('#frmsend').submit(function(e) {
+		location.reload();
+	});
+	</script>
+
+<script>
+	function sendForm(idx, tel_contactx){
+		var title ="รถออฟไลน์\nทำแบบฟอร์มด่วน\nhttp://doc.greenboxgps.com/orp/?c="+idx;
+		var contact = "0"+tel_contactx;
+		document.getElementById("dest").innerHTML = contact;
+		document.getElementById("msg").innerHTML = title;
+	};
+</script>
+<META content="MSHTML 6.00.2900.3243" name=GENERATOR></HEAD>
+<BODY bgColor=#FFFFFF leftMargin=0 background="" topMargin=0 onload=setcount() 
+marginheight="0" marginwidth="0">
+      <TABLE cellSpacing=1 cellPadding=0 width="100%" bgColor=#99cccc 
+        border=0><TBODY>
+        <TR>
+          <TD align=middle>
+            <TABLE cellSpacing=0 cellPadding=5 width="100%" align=center 
+            bgColor=#555555 border=0>
+              <FORM name=frmsend 
+              action=http://www.thaiwebsms.com/vip/api_zsrt.php method=post target="_blank">
+              <TBODY>
+              <TR>
+                <TD align=middle bgColor=#666666 colSpan=2><IMG src="" 
+                  align=top border=0>&nbsp;&nbsp; <FONT color=#99ffff><B>เบอร์ผู้ส่ง</B></FONT><BR><INPUT type=hidden value=014959561 
+                  name=username> <INPUT type=hidden value=66882000 
+                  name=password> <INPUT type=hidden value=o2r5ttjt name=secret> 
+                  <INPUT value=0882528227 name=sender></TD></TR>
+              <TR>
+                <TD vAlign=top align=right><FONT color=#ffffff><B>เบอร์ที่จะส่ง
+                  :</B></FONT> </TD>
+                <TD align=left><input type="hidden" class=boxi name="glist" onchange=setcount(); value='014959561'>
+				<TEXTAREA id=dest name=dest rows="2" cols="30"></TEXTAREA> <BR><SPAN 
+                  class=tiny>ส่งมากกว่า 1 เลขหมายให้ใช้ คอมม่า(,) <BR>เช่น 
+                  015555555,016666666</SPAN> <BR></TD></TR>
+              <TR>
+                <TD vAlign=top align=right><INPUT type=hidden value=eng 
+                  name=lang><FONT color=#ffffff><B>ข้อความ :</B></FONT> </TD>
+                <TD align=left><TEXTAREA class=boxi id="msg" name=msg rows=6 wrap=VIRTUAL cols=30 onchange=setcount();>SERVER,0,103.246.17.184,8404,0#</TEXTAREA> 
+                  <BR><INPUT class=boxi readOnly size=2 value=0 name=restcha> 
+                  <FONT color=#ffffff>/</FONT> <INPUT class=boxi readOnly size=2 
+                  value=0 name=maxcha> <FONT 
+                  color=#ffffff>Characters</FONT><BR><BR></TD></TR>
+              <TR>
+                <TD align=right><FONT color=#ffffff><B>Message Credit 
+                  :</B></FONT> </TD>
+                <TD align=left><INPUT type=hidden value=0 name=musecre><INPUT 
+                  type=hidden value=1219 name=restcre><FONT color=#ffffff><FONT 
+                  id=jmusecre>&nbsp;</FONT> <FONT 
+                  color=#ffffff>Credits</FONT></FONT></TD></TR>
+              <TR>
+                <TD></TD>
+                <TD vAlign=top align=left><BR><INPUT class=buto1 onclick=checkf(); type=button value=ดำเนินการ name=send> <INPUT class=buto1 onclick=form.reset() type=button value=ล้างทั้งหมด><BR><BR></TD></TR></FORM></TBODY></TABLE></TD></TR></TBODY></TABLE><BR>
+				</TD>
+    </TBODY></TABLE>
+	  
+	  <input type="text" id="sc" name="sc" placeholder="ค้นหา" onkeyup="searchFx()" autocomplete="off">
+	  <table id="myTable" border="1" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr class="header">
+                                <th width="auto">
+                                    <div align="center">รหัสฐานข้อมูล</div>
+                                </th>
+                                <th width="auto">
+                                    <div align="center">ชื่อ</div>
+                                </th>
+                                <th width="auto">
+                                    <div align="center">ทะเบียน</div>
+                                </th>
+								<th width="auto">
+                                    <div align="center">คัดซี</div>
+                                </th>
+                                <th width="auto">
+                                    <div align="center">imei</div>
+                                </th>
+								                                <th width="auto">
+                                    <div align="center">เบอร์ติดต่อ</div>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <!-- body dynamic rows -->
+                        <tbody id='myBody'>
+
+                        </tbody>
+
+                    </table>
+	  </BODY></HTML>
+<script>
+function searchFx() {
+  // Declare variables 
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("sc");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[3];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+}
+</script>
+  

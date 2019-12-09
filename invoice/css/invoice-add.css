@@ -1,0 +1,53 @@
+#invoice-number{
+    font-size: 20px !important;
+    font-weight: bold;
+    /* font-family: 'Prompt' !important; */
+}
+
+div .alert-red{
+    background-color: #ff3e3e;
+    color: aliceblue;
+}
+
+.checkbox-3 {
+    padding: 0;
+  }
+  .checkbox-3 input:checked ~ label:before {
+    content: '\2713';
+    text-indent: .6em;
+    line-height: 1.8em;
+    color: #fff;
+    background-color: #3D5AFE;
+    border: none;
+  }
+  
+  .checkbox-3 label:before {
+    content: '';
+    color: #fff;
+    font-size: .7em;
+    border: 1px solid #BDBDBD;
+    width: 1.8em;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    transition: .3s, line-height .15s;
+    text-indent: .5em;
+    line-height: 5em;
+    overflow: hidden;
+  }
+  
+  .checkbox-3 label {
+    position: relative;
+    line-height: 1.3em;
+    text-indent: 1.8em;
+    display: inline-block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none; 
+    user-select: none;
+  }
+  
+  .checkbox-3 input {
+    display: none;
+  }

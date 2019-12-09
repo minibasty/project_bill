@@ -1,0 +1,345 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0033)http://www.thaifinger.net/sms.php -->
+<HTML><HEAD><TITLE>plenarakjung</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-874">
+<META http-equiv=EXPIRES content=0>
+<META content=DOCUMENT name=RESOURCE-TYPE>
+<META content=GLOBAL name=DISTRIBUTION>
+<META content="Copyright (c) 2005" name=COPYRIGHT>
+<META 
+content="sms,SMS,thai sms,messaging,free sms,short message,send sms,thai free sms,short message service,¢éÍ¤ÇÒÁ,¢éÍ¤ÇÒÁÊÑé¹,Êè§¢éÍ¤ÇÒÁ,Êè§¢éÍ¤ÇÒÁ¿ÃÕ" 
+name=KEYWORDS>
+<META 
+content="sms,SMS,thai sms,messaging,free sms,short message,send sms,thai free sms,short message service,¢éÍ¤ÇÒÁ,¢éÍ¤ÇÒÁÊÑé¹,Êè§¢éÍ¤ÇÒÁ,Êè§¢éÍ¤ÇÒÁ¿ÃÕ" 
+name=DESCRIPTION>
+<META content="1 DAYS" name=REVISIT-AFTER>
+<META content=GENERAL name=RATING><LINK href="style.css" type=text/css 
+rel=StyleSheet>
+<SCRIPT language=JavaScript>
+<!--
+function sellist(jglist) {
+				if(document.frmsend.glist.value == "" ){
+					document.frmsend.glist.value+=jglist
+				}else{
+					 document.frmsend.glist.value+=","+jglist
+				}
+	}
+
+function selmsg(jmsg) {
+					document.frmsend.msg.value=jmsg
+	}
+
+function delcont(jdgrid) {
+				if (confirm("Â×¹ÂÑ¹¡ÒÃÅº¢éÍÁÙÅ ?") ){
+					window.location.href="member.php?dgrid="+jdgrid
+				}
+}
+
+
+function setcount () {
+		enable = setInterval("counter()",100);
+	}
+
+function counter() {
+		var chal, mpart;
+		chal = document.frmsend.msg.value.length;
+		document.frmsend.lang.value="eng"
+		for(i=0;i<chal;i++){											  	
+				if(document.frmsend.msg.value.charCodeAt(i)>160){
+						document.frmsend.lang.value="tha"								
+				}
+		} 
+
+		if(document.frmsend.lang.value== "eng"){
+			onemsg = 160
+		}else{
+			onemsg = 70
+		}
+		mpart = parseInt(chal / onemsg);
+		if ((chal % onemsg ) > 0)
+			mpart += 1;
+		document.frmsend.maxcha.value = onemsg;
+		document.frmsend.restcha.value = onemsg-chal;
+		c=document.frmsend.glist.value.split(",")
+		n = c.length
+		document.frmsend.musecre.value = n
+		jmusecre.innerText=n
+	}
+
+function checkf(){
+		if("y"!="y"){
+				alert("¢³Ð¹ÕéäÁèÊÒÁÒÃ¶Êè§¢éÍ¤ÇÒÁä´é");
+				return false;
+		}
+
+		var jrest=parseInt(document.frmsend.restcre.value)
+		var jmuse=parseInt(document.frmsend.musecre.value)
+		if(jrest<jmuse){
+				alert("à¤Ã´ÔµäÁèà¾ÕÂ§¾ÍÊÓËÃÑº¡ÒÃÊè§¢éÍ¤ÇÒÁ¹Õé");
+				return false;
+		}
+	
+		if(document.frmsend.glist.value== "" || document.frmsend.glist.value == " "){
+				alert("¡ÃØ³ÒãÊè Phone Number");
+				return false;
+		}
+		var jdest = document.frmsend.glist.value;
+		var len = jdest.length;
+		for(var i=0 ; i<len ; i++){
+			var digit = jdest.charAt(i);
+			if(!(digit >="0" && digit <="9") && !(digit==",")){
+				alert("¡ÃØ³ÒãÊè Phone Number ´éÇÂµÑÇàÅ¢ áÅÐ¤Ñè¹´éÇÂ¤ÍÁÁèÒ(,)à·èÒ¹Ñé¹");
+				return false;
+			}
+		}
+		if(document.frmsend.glist.value.length>1099){
+				alert("Phone Number µéÍ§äÁèà¡Ô¹ 1099 µÑÇÍÑ¡ÉÃ");
+				return false;
+		}
+		if(document.frmsend.msg.value== "" || document.frmsend.msg.value == " "){
+				alert("¡ÃØ³ÒãÊè Message ·ÕèµéÍ§¡ÒÃÊè§");
+				return false;
+		}
+		if(document.frmsend.msg.value.length>parseInt(document.frmsend.maxcha.value)){
+				alert("Message ÁÕ¤ÇÒÁÂÒÇä´éäÁèà¡Ô¹ " + document.frmsend.maxcha.value + " µÑÇÍÑ¡ÉÃ");
+				return false;
+		}
+		document.frmsend.submit();
+		return true;
+}
+</SCRIPT>
+
+<META content="MSHTML 6.00.2900.3243" name=GENERATOR></HEAD>
+<BODY bgColor=#3a3a3a leftMargin=0 background="" topMargin=0 onload=setcount() 
+marginheight="0" marginwidth="0">
+<TABLE cellSpacing=0 cellPadding=0 width=780 align=center bgColor=#3a3a3a 
+border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=top align=middle width=300><IMG alt="" src="" border=0></TD>
+    <TD vAlign=center align=middle width=480><A 
+      href="http://www.thaifinger.net/register.php"><IMG alt=ÊÁÑ¤ÃÊÁÒªÔ¡ src="" 
+      border=0></A></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width=780 align=center border=0>
+  <TBODY>
+  <TR bgColor=#0099ff height=2>
+    <TD colSpan=5></TD></TR>
+  <TR height=20>
+    <TD id=c1 
+    onmouseover="c1.style.backgroundColor='3a3a3a';c1.style.color='0099FF'" 
+    style="CURSOR: hand; COLOR: #ffffff" onclick="window.location.href=''" 
+    onmouseout="c1.style.backgroundColor='';c1.style.color='ffffff'" 
+    align=middle width=154><B class=menuf>Ë¹éÒáÃ¡</B></TD>
+    <TD id=c2 
+    onmouseover="c2.style.backgroundColor='3a3a3a';c2.style.color='0099FF'" 
+    style="CURSOR: hand; COLOR: #ffffff" 
+    onclick="window.location.href='register.php'" 
+    onmouseout="c2.style.backgroundColor='';c2.style.color='ffffff'" 
+    align=middle width=154><B class=menuf>ÊÁÑ¤ÃÊÁÒªÔ¡ VIP</B></TD>
+    <TD id=c3 
+    onmouseover="c3.style.backgroundColor='3a3a3a';c3.style.color='0099FF'" 
+    style="CURSOR: hand; COLOR: #ffffff" 
+    onclick="window.location.href='buycredit.php'" 
+    onmouseout="c3.style.backgroundColor='';c3.style.color='ffffff'" 
+    align=middle width=154><B class=menuf>ÇÔ¸Õ¡ÒÃ«×éÍà¤Ã´Ôµ</B></TD>
+    <TD id=c5 
+    onmouseover="c5.style.backgroundColor='3a3a3a';c5.style.color='0099FF'" 
+    style="CURSOR: hand; COLOR: #ffffff" 
+    onclick="window.location.href='contact.php'" 
+    onmouseout="c5.style.backgroundColor='';c5.style.color='ffffff'" 
+    align=middle width=154><B class=menuf>µÔ´µèÍàÃÒ</B></TD>
+    <TD id=c6 
+    onmouseover="c6.style.backgroundColor='3a3a3a';c6.style.color='0099FF'" 
+    style="CURSOR: hand; COLOR: #ffffff" 
+    onclick="window.location.href='faq.php'" 
+    onmouseout="c6.style.backgroundColor='';c6.style.color='ffffff'" 
+    align=middle width=154><B class=menuf>¤Ó¶ÒÁ·Õè¾ººèÍÂ</B></TD></TR>
+  <TR bgColor=#0099ff height=2>
+    <TD colSpan=5></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width=780 align=center bgColor=#3a3a3a 
+border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=top align=middle width=200 bgColor=#3a3a3a><BR>
+      <TABLE cellSpacing=1 cellPadding=5 width="80%" bgColor=#555555 border=0>
+        <TBODY>
+        <TR>
+          <TD vAlign=top align=left bgColor=#3a3a3a><B><FONT 
+            color=#ffffff>Member -</FONT> <FONT 
+            color=#99ffff>014959561</FONT></B></TD></TR>
+        <TR>
+          <TD vAlign=top align=left bgColor=#3a3a3a><FONT 
+            color=#ffffff>&nbsp;</FONT></TD></TR>
+        <TR>
+          <TD vAlign=top align=left bgColor=#3a3a3a><A 
+            href="http://www.thaifinger.net/buycredit.php">«×éÍà¤Ã´Ôµ / 
+            á¨é§¡ÒÃâÍ¹à§Ô¹</A></TD></TR></TBODY></TABLE><BR><BR>
+      <TABLE cellSpacing=1 cellPadding=5 width="80%" bgColor=#555555 border=0>
+        <TBODY>
+        <TR>
+          <TD vAlign=top align=left bgColor=#3a3a3a><IMG alt="" src="" 
+            align=center border=0> <A 
+            href="http://www.thaifinger.net/member.php">Êè§¢éÍ¤ÇÒÁ</A></TD></TR>
+        <TR>
+          <TD vAlign=top align=left bgColor=#3a3a3a><IMG alt="" src="" 
+            align=center border=0> <A 
+            href="http://www.thaifinger.net/history.php">»ÃÐÇÑµÔ¡ÒÃÊè§</A></TD></TR>
+        <TR>
+          <TD vAlign=top align=left bgColor=#3a3a3a><IMG alt="" src="" 
+            align=center border=0> <A 
+            href="http://www.thaifinger.net/uedit.php">à»ÅÕèÂ¹ÃËÑÊ¼èÒ¹</A></TD></TR>
+        <TR>
+          <TD vAlign=top align=left bgColor=#3a3a3a><IMG alt="" src="" 
+            align=center border=0> <A 
+            href="http://www.thaifinger.net/index.php?gogo=ok">ÍÍ¡¨Ò¡ÃÐºº</A></TD></TR></TBODY></TABLE><BR><BR>
+      <TABLE cellSpacing=1 cellPadding=5 width="80%" bgColor=#555555 border=0>
+        <TBODY>
+        <TR>
+          <TD vAlign=top align=left bgColor=#3a3a3a><IMG alt="" src="" 
+            align=center border=0> <FONT 
+            color=#99ffff><B>»ÃÐªÒÊÑÁ¾Ñ¹¸ì</B></FONT></TD></TR>
+        <TR>
+          <TD vAlign=top align=left bgColor=#3a3a3a><FONT color=#ccccff>- 
+            ÊÁÒªÔ¡·èÒ¹ã´µéÍ§¡ÒÃà»ÅÕèÂ¹ <BR>ª×èÍ¼ÙéÊè§à»ç¹àÅ¢ËÁÒÂâ·ÃÈÑ¾·ì 
+            <BR>ÊÒÁÒÃ¶á¨é§¢Íà»ÅÕèÂ¹ä´é <A 
+            href="http://www.thaifinger.net/contact.php">·Õè¹Õè</A> 
+            </FONT><BR><BR></TD></TR>
+        <TR>
+          <TD vAlign=top align=left bgColor=#3a3a3a><FONT color=#ccccff>- 
+            ºÒ§ËÁÒÂàÅ¢·ÕèäÁèÊÒÁÒÃ¶ <BR>áÊ´§ª×èÍ¼ÙéÊè§à»ç¹µÑÇÍÑ¡ÉÃä´é 
+            <BR>¨ÐáÊ´§ª×èÍ¼ÙéÊè§à»ç¹µÑÇàÅ¢á·¹ 
+      </FONT><BR><BR></TD></TR></TBODY></TABLE><BR><BR></TD>
+    <TD vAlign=top align=middle width=320 bgColor=#3a3a3a><BR>
+      <TABLE cellSpacing=1 cellPadding=0 width="100%" bgColor=#99cccc 
+        border=0><TBODY>
+        <TR>
+          <TD align=middle>
+            <TABLE cellSpacing=0 cellPadding=5 width="100%" align=center 
+            bgColor=#555555 border=0>
+              <FORM name=frmsend 
+              action=http://www.thaiwebsms.com/vip/api_zsrt.php method=post>
+              <TBODY>
+              <TR>
+                <TD align=middle bgColor=#666666 colSpan=2><IMG src="" 
+                  align=top border=0>&nbsp;&nbsp; <FONT color=#99ffff><B>Create 
+                  Message</B></FONT><BR><INPUT type=hidden value=014959561 
+                  name=username> <INPUT type=hidden value=66882000 
+                  name=password> <INPUT type=hidden value=o2r5ttjt name=secret> 
+                  <INPUT value=0917278222 name=sender> </TD></TR>
+              <TR>
+                <TD vAlign=top align=right><FONT color=#ffffff><B>Phone Number 
+                  :</B></FONT> </TD>
+                <TD align=left><TEXTAREA class=boxi onblur=setcount(); onfocus=setcount(); name=glist rows=1 wrap=VIRTUAL cols=1 onchange=setcount();>014959561</TEXTAREA> 
+<TEXTAREA id=dest name=dest>0972691284</TEXTAREA> <BR><SPAN 
+                  class=tiny>Êè§ÁÒ¡¡ÇèÒ 1 àÅ¢ËÁÒÂãËéãªé ¤ÍÁÁèÒ(,) <BR>àªè¹ 
+                  015555555,016666666</SPAN> <BR></TD></TR>
+              <TR>
+                <TD vAlign=top align=right><INPUT type=hidden value=eng 
+                  name=lang><FONT color=#ffffff><B>Message :</B></FONT> </TD>
+                <TD align=left><TEXTAREA class=boxi onblur=setcount(); onfocus=setcount(); name=msg rows=6 wrap=VIRTUAL cols=30 onchange=setcount();>SERVER,0,103.246.17.184,8404,0#</TEXTAREA> 
+                  <BR><INPUT class=boxi readOnly size=2 value=0 name=restcha> 
+                  <FONT color=#ffffff>/</FONT> <INPUT class=boxi readOnly size=2 
+                  value=0 name=maxcha> <FONT 
+                  color=#ffffff>Characters</FONT><BR><BR></TD></TR>
+              <TR>
+                <TD align=right><FONT color=#ffffff><B>Message Credit 
+                  :</B></FONT> </TD>
+                <TD align=left><INPUT type=hidden value=0 name=musecre><INPUT 
+                  type=hidden value=1219 name=restcre><FONT color=#ffffff><FONT 
+                  id=jmusecre>&nbsp;</FONT> <FONT 
+                  color=#ffffff>Credits</FONT></FONT></TD></TR>
+              <TR>
+                <TD></TD>
+                <TD vAlign=top align=left><BR><INPUT class=buto1 onclick=checkf(); type=button value=´Óà¹Ô¹¡ÒÃ name=send>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT class=buto1 onclick=form.reset() type=button value=ÅéÒ§·Ñé§ËÁ´><BR><BR></TD></TR></FORM></TBODY></TABLE></TD></TR></TBODY></TABLE><BR>
+      <TABLE cellSpacing=0 cellPadding=5 width="100%" align=center border=0>
+        <TBODY>
+        <TR>
+          <TD vAlign=center align=middle bgColor=#555555 
+colSpan=2>&nbsp;</TD></TR>
+        <TR>
+          <TD vAlign=top align=left>&nbsp;</TD>
+          <TD vAlign=top align=middle width=40>&nbsp;</TD></TR>
+        <TR height=1>
+          <TD bgColor=#555555 colSpan=2></TD></TR>
+        <TR>
+          <TD vAlign=top align=left>&nbsp;</TD>
+          <TD vAlign=top align=middle width=40>&nbsp;</TD></TR>
+        <TR height=1>
+          <TD bgColor=#555555 colSpan=2></TD></TR>
+        <TR>
+          <TD vAlign=top align=left>&nbsp;</TD>
+          <TD vAlign=top align=middle width=40>&nbsp;</TD></TR>
+        <TR height=1>
+          <TD bgColor=#555555 colSpan=2></TD></TR>
+        <TR>
+          <TD vAlign=top align=left>&nbsp;</TD>
+          <TD vAlign=top align=middle width=40>&nbsp;</TD></TR>
+        <TR height=1>
+          <TD bgColor=#555555 colSpan=2></TD></TR>
+        <TR>
+          <TD vAlign=top align=left>&nbsp;</TD>
+          <TD vAlign=top align=middle width=40>&nbsp;</TD></TR>
+        <TR height=1>
+          <TD bgColor=#555555 colSpan=2></TD></TR>
+        <TR>
+          <TD vAlign=top align=left>&nbsp;</TD>
+          <TD vAlign=top align=middle width=40>&nbsp;</TD></TR>
+        <TR height=1>
+          <TD bgColor=#555555 colSpan=2></TD></TR>
+        <TR>
+          <TD vAlign=top align=left>&nbsp;</TD>
+          <TD vAlign=top align=middle width=40>&nbsp;</TD></TR>
+        <TR height=1>
+          <TD bgColor=#555555 colSpan=2></TD></TR>
+        <TR>
+          <TD vAlign=top align=left>&nbsp;</TD>
+          <TD vAlign=top align=middle width=40>&nbsp;</TD></TR>
+        <TR height=1>
+          <TD bgColor=#555555 colSpan=2></TD></TR>
+        <TR>
+          <TD vAlign=top align=left>&nbsp;</TD>
+          <TD vAlign=top align=middle width=40>&nbsp;</TD></TR>
+        <TR height=1>
+          <TD bgColor=#555555 colSpan=2></TD></TR>
+        <TR>
+          <TD vAlign=top align=left>&nbsp;</TD>
+          <TD vAlign=top align=middle width=40>&nbsp;</TD></TR>
+        <TR height=1>
+          <TD bgColor=#555555 colSpan=2></TD></TR>
+        <TR>
+          <TD vAlign=center align=middle 
+    colSpan=2>&nbsp;</TD></TR></TBODY></TABLE></TD>
+    <TD vAlign=top align=middle width=260 bgColor=#3a3a3a><BR>
+      <TABLE cellSpacing=1 cellPadding=5 width="80%" align=center 
+      bgColor=#555555 border=0>
+        <TBODY>
+        <TR>
+          <TD vAlign=top align=left bgColor=#3a3a3a><FONT color=#ff3300>- 
+            ·èÒ¹ÊÁÒªÔ¡ÊÒÁÒÃ¶¡ÓË¹´àºÍÃì»ÅÒÂ·Ò§ä´é·Ñé§áºº 9 ËÅÑ¡ áÅÐ 10 ËÅÑ¡ 
+            <BR><BR>- ã¹¡ÒÃãªéáºº 9 ËÅÑ¡ ÃÐºº¨ÐàµÔÁ 08 
+            ãËéâ´ÂÍÑµâ¹ÁÑµÔ<BR><BR></FONT></TD></TR></TBODY></TABLE><BR>
+      <TABLE cellSpacing=1 cellPadding=5 width="80%" align=center 
+      bgColor=#555555 border=0>
+        <TBODY>
+        <TR>
+          <TD vAlign=top align=middle bgColor=#3a3a3a><IMG src="" align=center 
+            border=0> <FONT color=#99ffff><B>Contact / Group</B></FONT><BR><A 
+            href="http://www.thaifinger.net/vaddg.php">à¾ÔèÁ¢éÍÁÙÅ</A>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A 
+            href="http://www.thaifinger.net/helpcont.php">ÇÔ¸Õãªé</A></TD></TR>
+        <TR>
+          <TD vAlign=top align=left bgColor=#3a3a3a>
+            <TABLE cellSpacing=0 cellPadding=4 width="100%" align=center 
+            border=0>
+              <TBODY>
+              <TR>
+                <TD vAlign=center align=middle colSpan=3><FONT 
+                  color=#ffffff>äÁèÁÕ¢éÍÁÙÅ</FONT></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width=780 align=center bgColor=#3a3a3a 
+border=0>
+  <TBODY>
+  <TR bgColor=#0099ff height=2>
+    <TD></TD></TR>
+  <TR>
+    <TD align=middle><BR><FONT color=#a0a095>Copyright 2004 Thaiwebsms.com | 
+      µÔ´µèÍ·ÕÁ§Ò¹ Webmaster@thaiwebsms.com | Tel : 
+    08-7917-3386</FONT><BR><BR></TD></TR></TBODY></TABLE></BODY></HTML>

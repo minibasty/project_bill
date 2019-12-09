@@ -1,0 +1,7 @@
+.paginate_button {
+    padding: 1px 1px !important;
+}
+
+.paginate_button:hover {
+    border: none;
+}

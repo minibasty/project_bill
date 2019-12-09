@@ -1,0 +1,9 @@
+body{
+    margin: 10px;
+    background-color: darkgray;
+}
+.responsive {
+    width: 100%;
+    height: auto;
+    max-width: 600px;
+  }
