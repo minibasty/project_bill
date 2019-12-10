@@ -328,7 +328,10 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                             </table>
                             <div class="col text-center">
                                 <button id="saveInvoice" type="button" class="btn btn-sm btn-success" onclick="return (confirm('ยืนยันการบันบึก!'), setInvoiceTotal())"><i class="fad fa-save"></i> Save</button>
-                                <button id="printInvoice" style="display: none" type="button" class="btn btn-sm btn-primary" onclick=""><i class="fad fa-print"></i> Print</button>
+                               
+                                <a href="invoice/invoice_pdf.php?inv_id=<?= $_GET['inv'] ?>" target="_BLANK"> <button id="printInvoice" name="ok_head" style="display: none" type="button" class="btn btn-sm btn-primary" onclick="setInvoiceData()"><i class="fad fa-print"></i> Print</button></a>
+                                <!-- <a href="" target="_BLANK"></a> -->
+                            
                             </div>
                         </form>
                     </selection>
@@ -452,6 +455,8 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
 
 <?php
 $url_str =  $_SERVER['REQUEST_URI'];
+
+
 
 if (isset($_POST['ok_head'])) {
     $sql_insert = "INSERT INTO `invoice`(`inv_status`, `inv_cus_id`, `inv_name`, `inv_tel`, `inv_taxno`, `inv_address`, `inv_company`, `inv_email`, `invNo_prefix`, `invNo_y`, `invNo_m`, `invNo_count`, `invNo_all`, `inv_date`) 

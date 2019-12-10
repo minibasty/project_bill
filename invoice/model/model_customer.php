@@ -17,3 +17,4 @@ $data_array = array(
     'cus_mail' => $row_cus['cus_mail'],
 );
 echo json_encode($data_array, JSON_UNESCAPED_UNICODE);
+?>
