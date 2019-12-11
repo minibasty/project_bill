@@ -1,0 +1,204 @@
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+
+</head>
+
+<style>
+  div.a {
+    font-size: 50px;
+  }
+</style>
+
+<body>
+  <?php
+  require_once '..\..\mpdf\vendor\autoload.php';
+  include '../../all_function.php';
+
+  // if (!isset($_SESSION['login_true'])) {
+  //    header("Location: index.php");
+  //    exit;
+  // }
+  //include("1mm.php") ;
+  //include("1yy.php") ;
+  ?>
+
+  <?php
+  include("../../config.php");
+  $inv_id = $_GET["inv_id"];
+
+  $sql_inv = "SELECT `v_invoice_user`.* FROM `v_invoice_user` WHERE inv_id = $inv_id";
+  $query_inv = $conn->query($sql_inv);
+  $result_inv = $query_inv->fetch_assoc();
+
+  $vatValue = isset($result_inv['inv_vat']) ? $result_inv['inv_vat'] : '';
+  $withholdingValue = isset($result_inv['inv_withholding']) ? $result_inv['inv_withholding'] : '';
+
+
+  $sql_ser = "SELECT `v_service_lists`.* FROM `v_service_lists` WHERE inv_id = $inv_id";
+  $query_ser = $conn->query($sql_ser);
+  $countServiceList = $query_ser->num_rows;
+
+
+
+  $contents = '
+<table class="table-sm" border="0" cellpadding="0" cellspacing="0" style="width:100%">
+  <tr>
+    <td colspan="" style="width: 65%"><img src="../../img/logo.jpg" width="30%" height="10%"></td>
+    <td colspan="2" ><p style="font-size:32px;">ใบกำกับภาษี/ใบเสร็จรับเงิน</p><p style="font-size:26px">&nbsp;&nbsp;&nbsp;ต้นฉบับ(เอกสารออกเป็นชุด)</p></td>
+  </tr>
+  <tr>
+    <td colspan=""><p>บริษัท มิรดา คอร์ปอเรชั่น จำกัด</p>
+    <p>168 หมู่ 9 ต.อุโมงค์ อ.เมือง จ.ลำพูน 51150</p> 
+    <p>เลขประจำตัวผู้เสียภาษี 0505556000510 (สำนักงานใหญ่)</p>
+    <p>โทร. 0931311728</p>
+    <p>เบอร์มือถือ 0882528227</p>
+    <p>โทรสาร. 052033703</p>
+    <p>http://www.greenboxgps.com/</p>
+    <p>&nbsp;</p>
+    </td>
+    <td valign="top">
+    <p>เลขที่ </p>
+    <p>วันที่ </p>
+    <p>ผู้ขาย </p>
+    <hr>
+    <p>ชื่องาน </p>
+    </td>
+    <td valign="top">
+    <p>' . $result_inv['invNo_all'] . '&nbsp;</p>
+    <p>' . date("d/m/Y", strtotime($result_inv['inv_date'])) . '&nbsp;</p>
+    <p>' . $result_inv['inv_email'] . '&nbsp;</p>
+    <hr>
+    <p>' . $result_inv['cus_user'] . '&nbsp;</p>
+    </td>
+  </tr>
+  <tr>
+  <td colspan="3"><p>ลูกค้า</p>
+  <p>ชื่อบริษัท ' . $result_inv['inv_name'] . '</p> 
+  <p>ที่อยู่ ' . $result_inv['inv_address'] . '</p> 
+  <p>เลขประจำตัวผู้เสียภาษี ' . $result_inv['inv_taxno'] . '</p></td>
+</tr>
+</table>
+
+<div>
+<table style="margin-top: 10px;" border="0"  cellpadding="0" cellspacing="0">
+  <tr bgcolor="#34cb34" class="text-white">
+    <td width="5%" align="center">#</td>
+    <td width="40%" align="center">รายละเอียด</td>
+    <td width="10%" align="center">จำนวน</td>
+    <td width="10%" align="center">ราคาต่อหน่วย</td>.
+    <td width="10%" align="center">ยอดรวม</td>
+  </tr>';
+  $i_service = 0;
+  $totalprice = 0;
+  while ($result_ser = $query_ser->fetch_assoc()) {
+    $i_service++;
+    $totalprice += ($result_ser['inv_total_price']);
+
+
+    $contents .= '<tr>
+    
+    <th width="5%">' . $i_service . '</th>
+    <th align="left" width="40%">' . $result_ser['inv_list_name'] . ' | ' . $result_ser['inv_service_detail'] . ' (';
+    echo $sql_items = "SELECT * FROM v_service_items WHERE  inv_service_id = $result_ser[inv_service_id]";
+    $query_items = $conn->query($sql_items);
+    $countItems = $query_items->num_rows;
+    while ($result_items = $query_items->fetch_assoc()) {
+      $contents .= $result_items['amper'] . ', ';
+    }
+
+    $contents .= ')</th>
+    <th align="center" width="10%">' . $countItems . '</th>
+    <th align="right" width="10%">' . number_format(($result_ser['inv_total_price'] / $countItems),2) . '</th>
+    <th align="right" width="10%">' . number_format($result_ser['inv_total_price'],2) . '</th>
+  </tr>';
+  }
+
+  $totalPrice = $totalprice;
+  $vat = ($totalPrice * ($vatValue / 100));
+  $totalVat = ($totalPrice + $vat);
+  $withholding = ($totalPrice * ($withholdingValue / 100));
+  $totalPay = ($totalVat - $withholding);
+
+  $totalPriceStr = number_format($totalprice, 2);
+  $vatStr = number_format(($totalPrice * ($vatValue / 100)), 2);
+  $totalVatStr = number_format(($totalPrice + $vat), 2);
+  $withholdingStr = number_format(($totalPrice * ($withholdingValue / 100)), 2);
+  $totalPayStr = number_format(($totalVat - $withholding), 2);
+
+  $contents .= '</table>
+</div>
+
+<div>
+<table style="margin-top: 10px;" border="1"   cellpadding="0" cellspacing="0">
+<tr>
+    <th valign="bottom" align="left" colspan="2">(' . bahtText($totalVat) . ')</th>
+    <th align="right" colspan="2" >
+      <p>รวมเป็นเงิน<p/>
+      <p>ภาษีมูลค่าเพิ่ม 7%<p/>
+      <p>จำนวนเงินทั้งสิ้น<p/>
+    </th>
+    <th align="right"> 
+      <p>' . $totalPriceStr . ' บาท<p/>
+      <p>' . $vatStr . ' บาท<p/>
+      <p>' . $totalVatStr . ' บาท<p/>
+    </th>
+  </tr>
+  <tr>
+    <th align="right" colspan="4" ><p>&nbsp;</p><p>หักภาษี ณ ที่จ่าย '.$withholdingValue.'%<p/><p>ยอดชำระ<p/></th>
+    <th align="right"><p>&nbsp;</p><p>'.$withholdingStr.' บาท<p/><p>' . $totalPayStr . ' บาท<p/></th>
+  </tr>
+</table>
+</div>
+';
+
+  $footer = '<div>
+<table style="margin-top:10px" border="0"   cellpadding="0" cellspacing="0">
+  <tr>
+    <th align="left" colspan="6">การชำระเงินจะสมบูรณ์เมื่อบริษัทได้รับเงินเรียบร้อยแล้ว เงินสด / เช็ค / โอนเงิน / บัตรเครดิต</th>
+  </tr>
+  <tr>
+    <th align="left" colspan="6">ธนาคารกสิกรไทย จำกัด(มหาชน) เลขที่ &nbsp;&nbsp; 4142392785 &nbsp;&nbsp; วันที่ &nbsp;&nbsp; '.date("d/m/Y", strtotime($result_inv['inv_date'])).' &nbsp;&nbsp; จำนวนเงิน &nbsp;&nbsp; '.$totalPayStr.'</th>
+   </tr>
+  <tr>
+    <th align="left" colspan="4">ในนาม ' . $result_inv['inv_name'] . '</th>
+    <th align="right" colspan="2">ในนาม บริษัท มิรดา คอร์ปอเรชั่น จำกัด</th>
+  </tr>
+  <tr>
+    <th colspan="4">&nbsp;</th>
+  </tr>
+  <tr>
+    <th ><p>&nbsp;</p><p>ผู้จ่ายเงิน</p></th>
+    <th align="left" valign="bottom" colspan="3">วันที่</th>
+    <th ><p>&nbsp;</p><p>ผู้รับเงิน</p></th>
+    <th ><p>&nbsp;</p><p>วันที่</p></th>
+  </tr>
+</table>
+</div>'
+  ?>
+
+  <?php
+  $mpdf = new \Mpdf\Mpdf(
+    [
+      'mode' => 'utf-8', 'format' => 'A4',
+      'default_font_size' => 14,
+      'default_font' => 'sarabun',
+      'margin_top' => 9,
+      'margin_left' => 9,
+      'margin_right' => 9,
+      'mirrorMargins' => true
+    ]
+  );
+
+  $css = file_get_contents('..\css\pdf.css');
+  $mpdf->writeHTML($css, 1);
+
+  $mpdf->WriteHTML($contents);
+  $mpdf->SetFooter($footer);
+
+  $mpdf->Output();
+  ?>
+</body>
+
+</html>

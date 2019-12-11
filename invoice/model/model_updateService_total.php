@@ -19,11 +19,11 @@
     //total
     // echo $sumPrice;
     // vat
-    $price = number_format($price,2);
-    $vat = number_format(($price * ($row_invoice['inv_vat']/100)),2);
-    $priceSum = number_format(($vat + $price),2);
-    $withholding = number_format(($price * ($row_invoice['inv_withholding']/100)),2);
-    $totalPay = number_format(($priceSum - $withholding),2);
+    $price = number_format($price,2 , '.', '');
+    $vat = number_format(($price * ($row_invoice['inv_vat']/100)),2 , '.', '');
+    $priceSum = number_format(($vat + $price),2 , '.', '');
+    $withholding = number_format(($price * ($row_invoice['inv_withholding']/100)),2 , '.', '');
+    $totalPay = number_format(($priceSum - $withholding),2 , '.', '');
     
     $dataArr= array(
         'price' => $price, 

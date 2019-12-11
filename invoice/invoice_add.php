@@ -89,7 +89,7 @@ $inv_mail  = isset($row_invoice['inv_mail']) ? $row_invoice['inv_mail'] : '';
 $inv_date  = isset($row_invoice['inv_date']) ? $row_invoice['inv_date'] : '';
 
 
-echo $vatValue = isset($row_invoice['inv_vat']) ? $row_invoice['inv_vat'] : '';
+$vatValue = isset($row_invoice['inv_vat']) ? $row_invoice['inv_vat'] : '';
 $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_withholding'] : '';
 // check vat 
 
@@ -279,11 +279,11 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                                         <?php
                                                 }  //end while 
                                                 // คำนวณยอดเงิน
-                                                $totalPrice = number_format($totalPrice, 2);
-                                                $vat = number_format(($totalPrice * ($vatValue / 100)), 2);
-                                                $totalVat = number_format(($totalPrice + $vat), 2);
-                                                $withholding = number_format(($totalPrice * ($withholdingValue / 100)), 2);
-                                                $totalPay = number_format(($totalVat - $withholding), 2);
+                                                $totalPrice = number_format($totalPrice, 2, '.', '');
+                                                $vat = number_format(($totalPrice * ($vatValue / 100)), 2, '.', '');
+                                                $totalVat = number_format(($totalPrice + $vat), 2, '.', '');
+                                                $withholding = number_format(($totalPrice * ($withholdingValue / 100)), 2, '.', '');
+                                                $totalPay = number_format(($totalVat - $withholding), 2, '.', '');
                                             } //end if
 
 
@@ -328,10 +328,10 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                             </table>
                             <div class="col text-center">
                                 <button id="saveInvoice" type="button" class="btn btn-sm btn-success" onclick="return (confirm('ยืนยันการบันบึก!'), setInvoiceTotal())"><i class="fad fa-save"></i> Save</button>
-                               
-                                <a href="invoice/invoice_pdf.php?inv_id=<?= $_GET['inv'] ?>" target="_BLANK"> <button id="printInvoice" name="ok_head" style="display: none" type="button" class="btn btn-sm btn-primary" onclick="setInvoiceData()"><i class="fad fa-print"></i> Print</button></a>
-                                <!-- <a href="" target="_BLANK"></a> -->
-                            
+                                <button id="printInvoice" name="ok_head" style="display: none" type="button" class="btn btn-sm btn-primary" onclick="fxprintInvoice()"><i class="fad fa-print"></i> Print</button>
+                            </div>
+                            <div class="col text-center text-success" style="display: none" id="printSuccess" >
+                                <b><i class="fad fa-check"></i>success</b>
                             </div>
                         </form>
                     </selection>
@@ -493,7 +493,7 @@ if (isset($_POST['add_car'])) {
     $i = 0;
     foreach ($carSelects as $key => $value) {
         $i++;
-        $sql_insertCar .= " ('', '$service_id','$value')";
+        $sql_insertCar .= " ('$service_id','$value')";
         if ($i < $countSelect) {
             $sql_insertCar .= ", ";
         }

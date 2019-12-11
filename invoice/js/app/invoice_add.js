@@ -254,6 +254,22 @@ function updateTotalPrice() {
     });
 }
 
+function fxprintInvoice(){
+    // console.log("come");
+    const inv_id = document.getElementById("inv_id").value;
+    if (inv_id > 0) {
+        getPdf();
+    }
+    function getPdf(){
+        window.open('invoice/pdf/invoice_pdf.php?inv_id='+inv_id, '_blank');
+        showSuccessprint();
+    }
+
+    function showSuccessprint(){
+        document.getElementById("printSuccess").style.display = "block";
+    }
+}
+
 function chkNumber(ele) {
     var vchar = String.fromCharCode(event.keyCode);
     if ((vchar < "0" || vchar > "9") && vchar != ".") return false;
