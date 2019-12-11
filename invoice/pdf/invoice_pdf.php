@@ -131,7 +131,7 @@
 </div>
 
 <div>
-<table style="margin-top: 10px;" border="1"   cellpadding="0" cellspacing="0">
+<table style="margin-top: 10px;" border="0"   cellpadding="0" cellspacing="0">
 <tr>
     <th valign="bottom" align="left" colspan="2">(' . bahtText($totalVat) . ')</th>
     <th align="right" colspan="2" >

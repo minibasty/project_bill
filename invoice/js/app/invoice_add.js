@@ -207,7 +207,9 @@ function changeInvoiceWithholding(ele) {
 function setInvoiceTotal() {
     const invId = document.getElementById("inv_id").value;
     const totalPay = document.getElementById("totalPay").value;
-
+    if (totalPay > 0) {
+        setTotalInvoice()
+    }
     function setTotalInvoice() {
         $.ajax({
             type: "POST",
@@ -216,15 +218,19 @@ function setInvoiceTotal() {
             success: function(result) {
                 console.log(result);
                 if (result == "ok") {
-                    document.getElementById("saveInvoice").style.display = "none";
-                    alert("บันทึกข้อมูลสำเร็จ");
-                    document.getElementById("printInvoice").style.display = "inline";
+                    getPdf();
                 }
             }
         });
     }
-    if (totalPay > 0) {
-        setTotalInvoice()
+
+    function getPdf(){
+        window.open('invoice/pdf/invoice_pdf.php?inv_id='+invId, '_blank');
+        showSuccessprint();
+    }
+
+    function showSuccessprint(){
+        document.getElementById("printSuccess").style.display = "block";
     }
 }
 
@@ -260,14 +266,7 @@ function fxprintInvoice(){
     if (inv_id > 0) {
         getPdf();
     }
-    function getPdf(){
-        window.open('invoice/pdf/invoice_pdf.php?inv_id='+inv_id, '_blank');
-        showSuccessprint();
-    }
 
-    function showSuccessprint(){
-        document.getElementById("printSuccess").style.display = "block";
-    }
 }
 
 function chkNumber(ele) {
