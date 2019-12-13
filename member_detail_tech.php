@@ -72,7 +72,7 @@ require_once("pagination_function.php");
       <th style="width:5%">ปริ้น</th>
       <th style="width:5%">ip</th>
       <th style="width:auto">ทะเบียนรถ</th>
-      <th style="width:10%">จังหวัด</th>
+      <th style="width:10%">รุ่นเครื่อง</th>
       <th style="width:10%">User ลูกค้า</th>
       <th style="width:10%">เบอร์ Sim ในเครื่อง</th>
       <th style="width:10%">IMEI</th>
@@ -177,14 +177,12 @@ if($result && $result->num_rows>0){  // คิวรี่ข้อมูลส�
       <button type="button" class="btn btn-warning btn-sm" name="button">
         <i class="fas fa-satellite-dish"></i>
       </button> </a></th>
-      <td><?= $row['amper'] ?></td>
-      <td><?= $row['province'] ?></td>
+      <td><?= $row['amper'] ?>(<?= $row['province'] ?>)</td>
+      <td><?= $row['gpsmodel1'] ?></td>
       <td><?= $row['phone'] ?><font style="color: red; font-weight: bold;"> (<?= checkServer($row['email']) ?>)</font></td>
       <td><a href="tel:<?= $row['simno'] ?>" target="_BLANK"><?= $row['simno'] ?></a> </td>
       <td scope="row"><?= $row['zipcode'] ?></td>
       <td><?= $row['user'] ?></td>
-      
-      
       <td><?= $row['signup'] ?></td>
     </tr>
 <?php

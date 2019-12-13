@@ -1,3 +1,10 @@
+function confirm_print(){
+    let y = confirm('ยืนยันการปริ้น');
+    if(y == true){
+        setInvoiceTotal();
+    }
+}
+
 function getAddressCus(value) {
     let id_value = value;
     // console.log(id_value);
@@ -160,12 +167,8 @@ function changeServiceTotal(id, data) {
 
 function changeInvoiceVat(ele) {
     const invId = document.getElementById("inv_id").value;
-    let vatValue;
-    if (ele.checked == true) {
-        vatValue = 7;
-    } else {
-        vatValue = 0;
-    }
+    let vatValue = ele.value;
+
 
     function setDataVat() {
         $.ajax({
@@ -225,7 +228,7 @@ function setInvoiceTotal() {
     }
 
     function getPdf(){
-        window.open('invoice/pdf/invoice_pdf.php?inv_id='+invId, '_blank');
+        window.open('invoice_pdf.php?inv_id='+invId, '_blank');
         showSuccessprint();
     }
 

@@ -125,7 +125,7 @@ $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
 									?>
 									<tr>
 										<td class="text-left"><?= $row['invNo_all'] ?></td>
-										<td scope="row"></td>
+										<td scope="row"><?= $row['inv_date'] ?></td>
 										<td></td>
 										<td></td>
 										<td class="text-center"></td>

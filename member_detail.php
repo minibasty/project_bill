@@ -262,21 +262,21 @@ LEFT JOIN `canceler_service` ON `canceler_service`.`member_id` = `member`.`id` "
                   <!--////////////// button -->
                   <td class="text-center">
                     <form action="" method="post">
-                    <a href="?p=edit&user=<?= $row['user'] ?>" title="แก้ไข">
-                      <button type="button" id="edit" name="edit" class="btn btn-success btn-sm">
-                        <i class="fa fa-edit"></i>
-                      </button>
-                    </a>
-                    <a href="?p=detail&user=<?= $row['user'] ?>" title="พิมพ์เอกสาร">
-                      <!-- ปุ่มปริ้นเอกสาร -->
-                      <button type="button" id="print" name="print" class="btn btn-info btn-sm">
-                        <i class="fa fa-print"></i>
-                      </button>
-                    </a>
-                    <!-- ปุ่มลบ -->
-                    <button type="submit" id="del" name="del" value="<?= $row['user'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('ยืนยันการลบ')">
-                      <i class="fa fa-trash" title="ลบ"></i></button>
-                    <?= $row['cancel']; ?>
+                      <a href="?p=edit&user=<?= $row['user'] ?>" title="แก้ไข">
+                        <button type="button" id="edit" name="edit" class="btn btn-success btn-sm">
+                          <i class="fa fa-edit"></i>
+                        </button>
+                      </a>
+                      <a href="?p=detail&user=<?= $row['user'] ?>" title="พิมพ์เอกสาร">
+                        <!-- ปุ่มปริ้นเอกสาร -->
+                        <button type="button" id="print" name="print" class="btn btn-info btn-sm">
+                          <i class="fa fa-print"></i>
+                        </button>
+                      </a>
+                      <!-- ปุ่มลบ -->
+                      <button type="submit" id="del" name="del" value="<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('ยืนยันการลบ')">
+                        <i class="fa fa-trash" title="ลบ"></i></button>
+                      <?= $row['cancel']; ?>
                     </form>
                   </td>
                   <td class="text-left">
@@ -413,13 +413,11 @@ LEFT JOIN `canceler_service` ON `canceler_service`.`member_id` = `member`.`id` "
 
   <?php
   if (isset($_POST['del'])) {
-    echo "มา";
-    $del = "DELETE FROM `member` WHERE user='$_POST[del]'";
+    $del = "DELETE FROM `member` WHERE id='$_POST[del]'";
     $result_del = mysqli_query($conn, $del);
     if ($result_del) {
       echo "<script> alert('ลบข้อมูลสำเร็จ')</script>";
       print "<meta http-equiv=refresh content=0; URL=member_detail.php>";
-      mysqli_close($result_del);
     }
   }
   ?>

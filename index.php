@@ -8,16 +8,6 @@ if (isset($_SESSION['login_true']) == "") {
 } else {
   require('all_function.php');
   date_default_timezone_set("Asia/Bangkok");
-
-  // if (isset($_SESSION['login_true'])=="") {
-  // 	echo "<meta http-equiv=refresh content=0;URL=login.php>";
-  // }else {
-  // 	if ($_SESSION['login_status']=="tech") {
-  // 		echo "<meta http-equiv=refresh content=0;URL=member_detail_tech.php>";
-  // 	}elseif($_SESSION['login_status']=="admin"){
-  // 		echo "<meta http-equiv=refresh content=0;URL=member_detail.php>";
-  // 	}
-  // }
   ?>
 
   <!DOCTYPE html>
@@ -34,8 +24,6 @@ if (isset($_SESSION['login_true']) == "") {
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- fontawesomeicon CSS -->
-    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"> -->
     <!-- Custom styles for this template -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
     <link rel="stylesheet" href="vendor\select2\css\select2.css">
@@ -65,7 +53,7 @@ if (isset($_SESSION['login_true']) == "") {
         color: green;
       }
 
-      span {
+      i {
         margin: 0;
         padding: 0;
       }
@@ -96,51 +84,51 @@ if (isset($_SESSION['login_true']) == "") {
         <div class="sidebar-heading"><?= "สถานะ :: " . $status ?></div>
         <div class="list-group list-group-flush">
           <?php if ($status == "admin") { ?>
-            <a href="?p=main_admin" class="list-group-item list-group-item-action bg-light px-5"><span class="fas fa-home"></span> หน้าแรก (รายการลูกค้า)</a>
+            <a href="?p=main_admin" class="list-group-item list-group-item-action bg-light px-5"><i class="fal fa-cat-space"></i> รายการลูกค้า</a>
 
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-0 text-muted">
               เพิ่มข้อมูล</h6>
-            <a href="?p=add_member" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-plus"></span> เพิ่มข้อมูล #1</a>
-            <a href="?p=add_member2" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-plus"></span> เพิ่มข้อมูล #2</a>
+            <a href="?p=add_member" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-plus"></i> เพิ่มข้อมูล #1</a>
+            <a href="?p=add_member2" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-plus"></i> เพิ่มข้อมูล #2</a>
 
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-0 text-muted">
               ระบบจัดการ</h6>
-            <a href="?p=main_admin" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-file-word"></span> รายการลูกค้า</a>
-            <a href="?p=bill" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-file-word"></span> จัดการบิล</a>
-            <a href="?p=sim" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-sim-card"></span> จัดการซิม</a>
-            <a href="?p=report" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-file-alt"></span> พิมพ์รายงาน</a>
-            <a href="?p=barcode" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-barcode"></span> พิมพ์ Barcode</a>
+            <a href="?p=main_admin" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-file-word"></i> รายการลูกค้า</a>
+            <a href="?p=bill" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-file-word"></i> จัดการบิล</a>
+            <a href="?p=sim" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-sim-card"></i> จัดการซิม</a>
+            <a href="?p=report" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-file-alt"></i> พิมพ์รายงาน</a>
+            <a href="?p=barcode" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-barcode"></i> พิมพ์ Barcode</a>
             <a href="../pdf/main.php" target="_BLANK" class="list-group-item list-group-item-action bg-light px-5">
-              <span class="fas fa-upload"></span> Upload PDF</a>
-            <a href="?p=setip" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-satellite-dish"></span> Set ip</a>
-            <a href="?p=promotion" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-images"></span> จัดการ Promotions</a>
+              <i class="fas fa-upload"></i> Upload PDF</a>
+            <a href="?p=setip" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-satellite-dish"></i> Set ip</a>
+            <a href="?p=promotion" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-images"></i> จัดการ Promotions</a>
             <a href="sms/sms.htm" target="_BLANK" class="list-group-item list-group-item-action bg-light px-5">
-              <span class="fas fa-sms"></span> Send SMS</a>
+              <i class="fas fa-sms"></i> Send SMS</a>
             <a href="../gps-shop/" target="_BLANK" class="list-group-item list-group-item-action bg-light px-5">
-              <span class="fas fa-cart-plus"></span> GPS Shop</a>
+              <i class="fas fa-cart-plus"></i> GPS Shop</a>
             <a href="?p=invoice_main" target="" class="list-group-item list-group-item-action bg-light px-5">
-              <span class="fas fa-cart-plus"></span> Invoice</a>
+              <i class="fas fa-cart-plus"></i> Invoice</a>
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-0 text-muted">
               Masterfiles</h6>
-            <a href="?p=masterdlt" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-file-word"></span> Masterfile ขนส่ง</a>
-            <a href="?p=masterpost" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-sim-card"></span> Masterfile ปณ. </a>
+            <a href="?p=masterdlt" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-file-word"></i> Masterfile ขนส่ง</a>
+            <a href="?p=masterpost" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-sim-card"></i> Masterfile ปณ. </a>
 
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3  mb-0 text-muted">
               รายงานสรุป</h6>
-            <a href="?p=conclude_setup" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-chart-bar"></span> รายงานติดตั้ง</a>
-            <a href="?p=report_model" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-chart-bar"></span> รายงานเครื่องที่ใช้</a>
-            <a href="?p=off_list" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-chart-bar"></span> รายงานแจ้งรถ Offline</a>
+            <a href="?p=conclude_setup" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-chart-bar"></i> รายงานติดตั้ง</a>
+            <a href="?p=report_model" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-chart-bar"></i> รายงานเครื่องที่ใช้</a>
+            <a href="?p=off_list" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-chart-bar"></i> รายงานแจ้งรถ Offline</a>
             <!-- <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-3 mb-0 text-muted"></h6>
-        <a href="#" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-file-word"> Masterfile ขนส่ง</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-sim-card"> Masterfile ปณ. </a> -->
+        <a href="#" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-file-word"> Masterfile ขนส่ง</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-sim-card"> Masterfile ปณ. </a> -->
           <?php } ?>
           <?php if ($status == "tech") { ?>
-            <a href="?p=main_tech" class="list-group-item list-group-item-action bg-light px-5"><span class="fas fa-home"> หน้าแรก (รายการลูกค้า)</a>
+            <a href="?p=main_tech" class="list-group-item list-group-item-action bg-light px-5"><i class="fal fa-cat-space"></i> หน้าแรก (รายการลูกค้า)</a>
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-0 text-muted"> เมนู
             </h6>
-            <a href="?p=main_tech" class="list-group-item list-group-item-action bg-light px-5"><span class="fas fa-home"> รายการลูกค้า</a>
-            <a href="?p=add_member_tech" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-plus"></span> เพิ่มข้อมูล</a>
-            <a href="?p=setip" class="list-group-item list-group-item-action bg-light px-5"> <span class="fas fa-chart-area"></span> Set ip</a>
+            <a href="?p=main_tech" class="list-group-item list-group-item-action bg-light px-5"><i class="fal fa-cat-space"></i> รายการลูกค้า</a>
+            <a href="?p=add_member_tech" class="list-group-item list-group-item-action bg-light px-5"> <i class="fad fa-plus"></i> เพิ่มข้อมูล</a>
+            <a href="?p=setip" class="list-group-item list-group-item-action bg-light px-5"> <i class="fad fa-chart-area"></i> Set ip</a>
           <?php } ?>
         </div>
       </div>
@@ -150,10 +138,10 @@ if (isset($_SESSION['login_true']) == "") {
       <div id="page-content-wrapper">
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
           <div class="col">
-            <button class="btn btn-primary" id="menu-toggle"><span class="fas fa-bars"></span></button>
+            <button class="btn btn-primary" id="menu-toggle"><i class="fas fa-bars"></i></button>
           </div>
           <div class="col text-right">
-            <a href="logout.php"><button class="btn btn-danger mt-auto" id="menu-toggle" type="button"><span class="fas fa-sign-out-alt"></span> Logout</button></a>
+            <a href="logout.php"><button class="btn btn-danger mt-auto" id="menu-toggle" type="button"><i class="fas fa-sign-out-alt"></i> Logout</button></a>
           </div>
         </nav>
 

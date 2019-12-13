@@ -91,7 +91,8 @@ $sex = trim($_POST['sex']);
 $address = $_POST['address'];
 $amper = $_POST['amper'];
 // $province = $_POST['province'];
-$imeiall = $_POST['imeiall'];
+$simall = $_POST['sim'];
+$imei = $_POST['imei'];
 $phone = $_POST['phone'];
 $main_user = $_POST['main_user'];
 $education = $_POST['education'];
@@ -133,9 +134,8 @@ while ($r_pro=$rs_pro->fetch_array()) {
 <body>
 <?php
 
-$sim = substr($imeiall,0,1);
-$simno = substr($imeiall,1,10);
-$zipcode = substr($imeiall,12,23);
+$sim = substr($simall,0,1);
+$simno = substr($simall,1,10);
 
 // if($name=="" || $age=="" || $user_name=="" || $email=="") {
 // echo "มา 1";
@@ -182,7 +182,7 @@ $member_in = "000$member_db" ;
 $member_id = $member_in; //
 $insert_member="insert into member (name,date,year,address,amper,zipcode,phone,education,
 work,user,email,car_approve_id,register_type,province2,signup,sim,simno,member_id,age,sex,contrack,tel_contact, gpsmodel1, main_user,province)
-        values('$name','$date','$year','$address','$amper','$zipcode',
+        values('$name','$date','$year','$address','$amper','$imei',
         '$phone','$education','$work','$user_name','$email','$car_approve_id',
         '$register_type','$province2',NOW(),'$sim','$simno','$member_id','$age','$sex', '$contrack', '$tel_contact', '$gpsmodel', '$main_user','$province')";
 $result = mysqli_query($conn, $insert_member);

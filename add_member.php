@@ -261,12 +261,15 @@ function monthThai($strDate)
                   <option value="4170">รถจักรยานยนต์สาธารณะ (รย.17)</option>
                 </select>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-3">
                 <label for="amper">เลขทะเบียนรถ</label>
                 <div class="form-inline">
-                  <input type="text" class="form-control  form-control-sm col" name="amper" id="amper" value="">
-                  &nbsp;
-                  <select name=province2 id="province2" class="select2 form-control  form-control-sm col">
+                  <input type="text" class="form-control  form-control-sm col" name="amper" id="amper" value="" placeholder="00-0000">
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+              <label for="province2">จังหวัด</label>
+              <select name=province2 id="province2" class="select2 form-control  form-control-sm col">
                     <option value="">เลือกจังหวัด</option>
                   <?php 
                   $sql_province="SELECT * FROM province_code order by code asc";
@@ -278,7 +281,6 @@ function monthThai($strDate)
                     } 
                   ?> 
                   </select>
-                </div>
               </div>
             </div>
             <div class="row">
@@ -305,10 +307,15 @@ function monthThai($strDate)
                   <option value="ST901">ST901</option>
                 </select>
               </div>
-              <div class="form-group col-md-6">
-                <label for="imeiall">SIM + IMEI</label>
-                <input name="imeiall" class="form-control  form-control-sm" type="text" id="imeiall" value="" size="30" placeholder="000000000000000000">
+              <div class="form-group col-md-3">
+                <label for="imeiall">SIM</label>
+                <input name="sim" class="form-control  form-control-sm" type="text" id="sim" value="" size="11" placeholder="00000000000">
               </div>
+              <div class="form-group col-md-3">
+                <label for="imeiall">IMEI</label>
+                <input name="imei" class="form-control  form-control-sm" type="text" id="imei" value="" size="30" placeholder="">
+              </div>
+
             </div>
 
             <div class="row">

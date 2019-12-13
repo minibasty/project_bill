@@ -133,11 +133,11 @@
     if ($result_update) {
       echo " <script> alert('บันทึกสำเร็จ') </script> ";
       // echo $update;
-      print "<meta http-equiv=refresh content=0;URL=?p=edit&user=$_GET[user]&>";
+      print "<meta http-equiv=refresh content=0;URL=?p=edit&user=$_POST[user]&>";
     }else {
       // echo $update;
-      echo " <script> alert('บันทึกไม่ลง กรุณาตรวจสอบ') </script> ";
-      print "<meta http-equiv=refresh content=0;URL=?p=edit&user=$_GET[user]>";
+      echo " <script> alert('บันทึกไม่สำเร็จ กรุณาตรวจสอบ') </script> ";
+      print "<meta http-equiv=refresh content=0;URL=?p=edit&user=$_POST[user]>";
     }
   }
 

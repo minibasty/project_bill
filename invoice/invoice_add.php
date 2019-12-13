@@ -166,7 +166,7 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                             <tbody>
                                 <tr>
                                     <th rowspan="2">ที่อยู่</td>
-                                    <td rowspan="2"><textarea id="cus_address" class="form-control form-control-sm" name="cus_address" cols="30" rows="3"><?= $inv_address ?></textarea> </td>
+                                    <td rowspan="2"><textarea id="cus_address" class="form-control form-control-sm" name="cus_address" cols="30" rows="3" required><?= $inv_address ?></textarea> </td>
                                     <th>เลขประจำตัวผู้เสียภาษี</th>
                                     <td><input id="cus_taxno" name="cus_taxno" class="form-control form-control-sm" type="text" value="<?= $inv_taxno ?>"></td>
                                 </tr>
@@ -186,14 +186,14 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                             <tbody>
                                 <tr>
                                     <th>ชื่อลูกค้า</td>
-                                    <td><input id="cus_name" name="cus_name" class="form-control form-control-sm" type="text" value="<?= $inv_name ?>"></td>
+                                    <td><input id="cus_name" name="cus_name" class="form-control form-control-sm" type="text" value="<?= $inv_name ?>" required></td>
 
                                     <th>เบอร์โทร</th>
                                     <td><input id="cus_tel" name="cus_tel" class="form-control form-control-sm" type="text" value="<?= $inv_tel ?>"></td>
                                 </tr>
                                 <tr>
                                     <th>รหัสลูกค้า</td>
-                                    <td><input id="cus_user" name="cus_user" class="form-control form-control-sm" type="text" value="<?= $inv_user ?>"></td>
+                                    <td><input id="cus_user" name="cus_user" class="form-control form-control-sm" type="text" value="<?= $inv_user ?>" readonly></td>
                                     <th>อีเมลล์</td>
                                     <td><input id="cus_mail" name="cus_mail" class="form-control form-control-sm" type="text" value="<?= $inv_mail ?>"></td>
                                 </tr>
@@ -299,8 +299,11 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                                             <td colspan="3">ภาษีมูลค่าเพิ่ม 7%</td>
                                             <td>
                                                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                                    <input alt="" type="checkbox" class="custom-control-input" <?php if ($vatValue == 7) { echo "checked"; } ?> id="value_vat" onclick="changeInvoiceVat(this)">
-                                                    <label class="custom-control-label" for="value_vat"></label>
+                                                    <select name="value_vat" id="value_vat" onchange="changeInvoiceVat(this)">
+                                                        <option value="0" selected>ไม่บวกภาษี</option>
+                                                        <option value="7">Vat นอก</option>
+                                                        <option value="1">Vat ใน</option>
+                                                    </select>
                                                 </div>
                                             </td>
                                             <td><input type="text" readonly class="form-control-plaintext form-control-sm" id="vat" name="vat" value="<?= $vat ?>"></td>
@@ -327,7 +330,7 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                                 </tbody>
                             </table>
                             <div class="col text-center">
-                                <button id="saveInvoice" type="button" class="btn btn-sm btn-success" onclick="return (confirm('ยืนยันการบันบึก!'), setInvoiceTotal())"><i class="fad fa-save"></i> Save</button>
+                                <button id="saveInvoice" type="button" class="btn btn-sm btn-success" onclick="return confirm_print('ยืนยันการบันบึก!')"><i class="fad fa-print"></i> Print</button>
                                 <button id="printInvoice" name="ok_head" style="display: none" type="button" class="btn btn-sm btn-primary" onclick="fxprintInvoice()"><i class="fad fa-print"></i> Print</button>
                             </div>
                             <div class="col text-center text-success" style="display: none" id="printSuccess" >

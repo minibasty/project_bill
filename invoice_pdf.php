@@ -13,8 +13,8 @@
 
 <body>
   <?php
-  require_once '..\mpdf\vendor\autoload.php';
-  include '../../all_function.php';
+  require_once 'mpdf\vendor\autoload.php';
+  include 'all_function.php';
 
   // if (!isset($_SESSION['login_true'])) {
   //    header("Location: index.php");
@@ -25,7 +25,7 @@
   ?>
 
   <?php
-  include("../../config.php");
+  include("config.php");
   $inv_id = $_GET["inv_id"];
 
   $sql_inv = "SELECT `v_invoice_user`.* FROM `v_invoice_user` WHERE inv_id = $inv_id";
@@ -45,7 +45,7 @@
   $contents = '
 <table class="table-sm" border="0" cellpadding="0" cellspacing="0" style="width:100%">
   <tr>
-    <td colspan="" style="width: 65%"><img src="../../img/logo.jpg" width="" height="10%"></td>
+    <td colspan="" style="width: 65%"><img src="img/logo.jpg" width="" height="10%"></td>
     <td colspan="2" ><p style="font-size:32px;">ใบกำกับภาษี/ใบเสร็จรับเงิน</p><p style="font-size:26px">&nbsp;&nbsp;&nbsp;ต้นฉบับ(เอกสารออกเป็นชุด)</p></td>
   </tr>
   <tr>
@@ -116,16 +116,28 @@
   }
 
   $totalPrice = $totalprice;
-  $vat = ($totalPrice * ($vatValue / 100));
-  $totalVat = ($totalPrice + $vat);
-  $withholding = ($totalPrice * ($withholdingValue / 100));
-  $totalPay = ($totalVat - $withholding);
 
-  $totalPriceStr = number_format($totalprice, 2);
-  $vatStr = number_format(($totalPrice * ($vatValue / 100)), 2);
-  $totalVatStr = number_format(($totalPrice + $vat), 2);
-  $withholdingStr = number_format(($totalPrice * ($withholdingValue / 100)), 2);
-  $totalPayStr = number_format(($totalVat - $withholding), 2);
+
+  $vatStrValue = $vatValue;
+  if ($vatStrValue==1) {
+      $vat = ($totalPrice-($totalPrice / 1.07));
+      $priceNovat = ($totalPrice-$vat);
+      $totalVat = ($vat + $priceNovat);
+  }elseif ($vatStrValue==7) {
+      $vatStr = ($totalPrice * (7/100));
+      $priceNovat = ($totalPrice);
+      $totalVat = ($vatStr + $totalPrice);
+  }
+  
+      $withholding = ($totalVat * ($withholdingValue / 100));
+      $totalPay = ($totalVat - $withholding);
+
+      $totalPriceStr = number_format($totalprice, 2);
+      $vatStr = number_format($vatStr, 2);
+      $priceNovatStr = number_format($priceNovat,2);
+      $totalVatStr = number_format(($totalVat), 2);
+      $withholdingStr = number_format(($totalPrice * ($withholdingValue / 100)), 2);
+      $totalPayStr = number_format(($totalVat - $withholding), 2);
 
   $contents .= '</table>
 </div>
@@ -136,13 +148,19 @@
     <th valign="bottom" align="left" colspan="2">(' . bahtText($totalVat) . ')</th>
     <th align="right" colspan="2" >
       <p>รวมเป็นเงิน<p/>
-      <p>ภาษีมูลค่าเพิ่ม 7%<p/>
-      <p>จำนวนเงินทั้งสิ้น<p/>
+      <p>ภาษีมูลค่าเพิ่ม 7%<p/>';
+      if ($vatStrValue=='1') {
+        $contents .= '<p>ราคาไม่รวมภาษีมูลค่าเพิ่ม<p/>';
+      }
+      $contents .='<p>จำนวนเงินทั้งสิ้น<p/>
     </th>
     <th align="right"> 
       <p>' . $totalPriceStr . ' บาท<p/>
-      <p>' . $vatStr . ' บาท<p/>
-      <p>' . $totalVatStr . ' บาท<p/>
+      <p>' . $vatStr . ' บาท<p/>';
+      if ($vatStrValue=='1') {
+        $contents .= '<p>'.$priceNovatStr.' บาท<p/>';
+      }
+      $contents .= '<p>' . $totalVatStr . ' บาท<p/>
     </th>
   </tr>
   <tr>
@@ -191,7 +209,7 @@
     ]
   );
 
-  $css = file_get_contents('..\css\pdf.css');
+  $css = file_get_contents('invoice\css\pdf.css');
   $mpdf->writeHTML($css, 1);
 
   $mpdf->WriteHTML($contents);
