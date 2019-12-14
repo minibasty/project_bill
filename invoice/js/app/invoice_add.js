@@ -251,6 +251,7 @@ function updateTotalPrice() {
         url: "invoice/model/model_updateService_total.php",
         data: { inv_id: invId },
         success: function(result) {
+            console.log(result);
             let data = JSON.parse(result);
             document.getElementById("totalPrice").value = data.price;
             document.getElementById("vat").value = data.vat;

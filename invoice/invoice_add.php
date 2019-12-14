@@ -260,7 +260,7 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                                                     <?php
                                                                 if ($countOfitems > 0) {
                                                                     while ($row_items = $qr_invItems->fetch_assoc()) {
-                                                                        echo $row_items['amper'] . ", ";
+                                                                        echo $row_items['address']."/".$row_items['amper']. "/".$row_items['user']. ", ";
                                                                     }
                                                                 }
 
@@ -279,11 +279,27 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                                         <?php
                                                 }  //end while 
                                                 // คำนวณยอดเงิน
-                                                $totalPrice = number_format($totalPrice, 2, '.', '');
-                                                $vat = number_format(($totalPrice * ($vatValue / 100)), 2, '.', '');
-                                                $totalVat = number_format(($totalPrice + $vat), 2, '.', '');
-                                                $withholding = number_format(($totalPrice * ($withholdingValue / 100)), 2, '.', '');
-                                                $totalPay = number_format(($totalVat - $withholding), 2, '.', '');
+                                                $totalPrice = $totalPrice;
+                                                $vatStrValue = $vatValue;
+                                                if ($vatStrValue == 1) {
+                                                    $vatStr = ($totalPrice - ($totalPrice / 1.07));
+                                                    $priceNovat = ($totalPrice - $vatStr);
+                                                    $totalVat = ($vatStr + $priceNovat);
+                                                } elseif ($vatStrValue == 7) {
+                                                    $vatStr = ($totalPrice * (7 / 100));
+                                                    $priceNovat = ($totalPrice);
+                                                    $totalVat = ($vatStr + $totalPrice);
+                                                }
+
+                                                $withholding = ($totalVat * ($withholdingValue / 100));
+                                                $totalPay = ($totalVat - $withholding);
+
+                                                $totalPriceStr = number_format($totalPrice, 2);
+                                                $vatStr = number_format($vatStr, 2);
+                                                $priceNovatStr = number_format($priceNovat, 2);
+                                                $totalVatStr = number_format(($totalVat), 2);
+                                                $withholdingStr = number_format(($totalPrice * ($withholdingValue / 100)), 2);
+                                                $totalPayStr = number_format(($totalVat - $withholding), 2);
                                             } //end if
 
 
@@ -293,26 +309,32 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                                         <tr id="">
                                             <td colspan="3">รวมเป็นเงิน</td>
                                             <td></td>
-                                            <td><input type="text" readonly class="form-control-plaintext form-control-sm" id="totalPrice" name="totalPrice" value="<?= $totalPrice ?>"></td>
+                                            <td><input type="text" readonly class="form-control-plaintext form-control-sm" id="totalPrice" name="totalPrice" value="<?= $totalPriceStr ?>"></td>
                                         </tr>
                                         <tr>
                                             <td colspan="3">ภาษีมูลค่าเพิ่ม 7%</td>
                                             <td>
-                                                <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                                                    <select name="value_vat" id="value_vat" onchange="changeInvoiceVat(this)">
-                                                        <option value="0" selected>ไม่บวกภาษี</option>
-                                                        <option value="7">Vat นอก</option>
-                                                        <option value="1">Vat ใน</option>
+                                                <div class="">
+                                                    <select class="form-control" name="value_vat" id="value_vat" onchange="changeInvoiceVat(this)">
+                                                        <option <?php if ($vatValue == 0) { echo 'selected'; } ?> value="0">ไม่บวกภาษี</option>
+                                                        <option <?php if ($vatValue == 7) { echo 'selected'; } ?> value="7">Vat นอก</option>
+                                                        <option <?php if ($vatValue == 1) { echo 'selected'; } ?> value="1">Vat ใน</option>
                                                     </select>
                                                 </div>
                                             </td>
-                                            <td><input type="text" readonly class="form-control-plaintext form-control-sm" id="vat" name="vat" value="<?= $vat ?>"></td>
+                                            <td><input type="text" readonly class="form-control-plaintext form-control-sm" id="vat" name="vat" value="<?= $vatStr ?>"></td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td colspan="3">ราคาไม่รวมภาษีมูลค่าเพิ่ม</td>
+                                            <td></td>
+                                            <td><input type="text" readonly class="form-control-plaintext form-control-sm" id="priceNovatStr" name="priceNovatStr" value="<?= $priceNovatStr ?>"></td>
                                         </tr>
                                         <tr>
                                             <td id="bahtText">(<?= bahtText($totalVat) ?>)</td>
                                             <td colspan="2">จำวนวเงินรวมทั้งสิ้น</td>
                                             <td></td>
-                                            <td><input type="text" readonly class="form-control-plaintext form-control-sm" id="totalVat" name="totalVat" value="<?= $totalVat ?>"></td>
+                                            <td><input type="text" readonly class="form-control-plaintext form-control-sm" id="totalVat" name="totalVat" value="<?= $totalVatStr ?>"></td>
                                         </tr>
                                         <tr>
                                             <td colspan="3">หัก ณ ที่จ่าย (%)</td>
@@ -333,7 +355,7 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                                 <button id="saveInvoice" type="button" class="btn btn-sm btn-success" onclick="return confirm_print('ยืนยันการบันบึก!')"><i class="fad fa-print"></i> Print</button>
                                 <button id="printInvoice" name="ok_head" style="display: none" type="button" class="btn btn-sm btn-primary" onclick="fxprintInvoice()"><i class="fad fa-print"></i> Print</button>
                             </div>
-                            <div class="col text-center text-success" style="display: none" id="printSuccess" >
+                            <div class="col text-center text-success" style="display: none" id="printSuccess">
                                 <b><i class="fad fa-check"></i>success</b>
                             </div>
                         </form>
