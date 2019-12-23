@@ -50,7 +50,7 @@
   </tr>
   <tr>
     <td colspan=""><p>บริษัท มิรดา คอร์ปอเรชั่น จำกัด</p>
-    <p>168 หมู่ 9 ต.อุโมงค์ อ.เมือง จ.ลำพูน 51150</p> 
+    <p>168 หมู่ 9 ต.อุโมงค์ อ.เมืองลำพูน จ.ลำพูน 51150</p> 
     <p>เลขประจำตัวผู้เสียภาษี 0505556000510 (สำนักงานใหญ่)</p>
     <p>โทร. 0931311728</p>
     <p>เบอร์มือถือ 0882528227</p>
@@ -75,7 +75,7 @@
   </tr>
   <tr>
   <td colspan="3"><p>ลูกค้า</p>
-  <p>ชื่อบริษัท ' . $result_inv['inv_name'] . '</p>
+  <p>ชื่อ ' . $result_inv['inv_name'] . '</p>
   <p>ที่อยู่ ' . $result_inv['inv_address'] . '</p>
   <p>เลขประจำตัวผู้เสียภาษี ' . $result_inv['inv_taxno'] . '</p></td>
 </tr>
@@ -100,15 +100,15 @@
     $contents .= '<tr>
     
     <th width="5%">' . $i_service . '</th>
-    <th align="left" width="40%">' . $result_ser['inv_list_name'] . ' | ' . $result_ser['inv_service_detail'] . ' (';
+    <th align="left" width="40%">' . $result_ser['inv_list_name'] . ' | ' . $result_ser['inv_service_detail'] . ' ';
     echo $sql_items = "SELECT * FROM v_service_items WHERE  inv_service_id = $result_ser[inv_service_id]";
     $query_items = $conn->query($sql_items);
     $countItems = $query_items->num_rows;
     while ($result_items = $query_items->fetch_assoc()) {
-      $contents .= $result_items['amper'] . ', ';
+      $contents .= '('.$result_items['address'].'/'.$result_items['amper']. '/'.$result_items['user']. '), ';
     }
 
-    $contents .= ')</th>
+    $contents .= '</th>
     <th align="center" width="10%">' . $countItems . '</th>
     <th align="right" width="10%">' . number_format(($result_ser['inv_total_price'] / $countItems),2) . '</th>
     <th align="right" width="10%">' . number_format($result_ser['inv_total_price'],2) . '</th>
@@ -120,7 +120,7 @@
 
   $vatStrValue = $vatValue;
   if ($vatStrValue==1) {
-      $vat = ($totalPrice-($totalPrice / 1.07));
+      $vatStr = ($totalPrice-($totalPrice / 1.07));
       $priceNovat = ($totalPrice-$vat);
       $totalVat = ($vat + $priceNovat);
   }elseif ($vatStrValue==7) {

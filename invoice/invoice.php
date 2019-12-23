@@ -75,8 +75,9 @@ $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
 								<th style="width:auto">เลขที่</th>
 								<th style="width:auto">วันที่</th>
 								<th style="width:auto">ผู้ประกอบการ</th>
-								<th style="width:auto">เลขคัทซี</th>
-								<th style="width:auto">เครือข่าย</th>
+								<th style="width:auto">ยอรวม</th>
+								<th style="width:auto">สถานะ</th>
+								<th style="width:auto"></th>
 
 							</tr>
 						</thead>
@@ -126,9 +127,13 @@ $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
 									<tr>
 										<td class="text-left"><?= $row['invNo_all'] ?></td>
 										<td scope="row"><?= $row['inv_date'] ?></td>
-										<td></td>
-										<td></td>
+										<td><?= $row['inv_name'] ?></td>
+										<td><?= number_format($row['inv_total'],2) ?></td>
 										<td class="text-center"></td>
+										<td class="text-center">
+											<a href="?p=invoice_add&inv=<?= $row['inv_id'] ?>">
+											<button class="btn btn-sm btn-info"> <i class="fad fa-info-square"></i></button></a>
+										</td>
 									</tr>
 
 							<?php
