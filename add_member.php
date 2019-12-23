@@ -97,7 +97,7 @@ body {
                                 <label for="address">ยี่ห้อรถ</label>
                                 <select name="address" id="address" class="select2 form-control form-control-sm"
                                     onChange="dis(this.value)">
-                                    <option value="">------เลือกยี่ห้อรถ-----</option>
+                                    <option value="" selected disabled>------เลือกยี่ห้อรถ-----</option>
                                     <option value="BENZ">BENZ</option>
                                     <option value="MERCEDES">MERCEDES</option>
                                     <option value="MERCEDES BENZ">MERCEDES BENZ</option>
@@ -111,7 +111,7 @@ body {
                                     <option value="FAW">FAW</option>
                                     <option value="FORD">FORD</option>
                                     <option value="GOLDEN DRAGON">GOLDEN DRAGON</option>
-                                    <option value="HINO" selected>HINO</option>
+                                    <option value="HINO">HINO</option>
                                     <option value="HONDA">HONDA</option>
                                     <option value="HYUNDAI">HYUNDAI</option>
                                     <option value="ISUZU">ISUZU</option>
@@ -410,7 +410,7 @@ body {
                                         <option value=31>31</option>
                                     </select> &nbsp;
                                     เดือน &nbsp;
-                                    <select name="sex" id="month" class="form-control  form-control-sm">
+                                    <select name="sex" id="month" class="form-control form-control-sm">
                                         <option value="
                     <?php echo "".monthThai('$strDate'); ?>" selected="selected">
                                             <?php echo "".monthThai('$strDate');
@@ -436,14 +436,15 @@ body {
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="email">Server</label>
-                                <select name="email" id="email" class="form-control  form-control-sm">
+                                <select name="email" id="email" class="form-control  form-control-sm select2">
+                                    <option value="" selected disabled>------เลิอก SERVER-----</option>
                                     <option value="sv1.greenboxgps.com">ตาจบ 2</option>
                                     <option value="greenboxsv3.com">ตาจบ</option>
                                     <option value="greensv1.com">หาร</option>
                                     <option value="greensv2.com">ตี๋</option>
                                     <option value="greenboxsv.com">ก๊อช</option>
                                     <option value="gpsgreenbox.com">greenbox</option>
-                                    <option value="s1.gpsgreenbox.com" selected>S1</option>
+                                    <option value="s1.gpsgreenbox.com">S1</option>
                                     <option value="s2.gpsgreenbox.com">S2</option>
                                     <option value="s3.gpsgreenbox.com">S3</option>
                                     <option value="s4.gpsgreenbox.com">S4</option>
@@ -452,27 +453,44 @@ body {
 
                                 </select>
                             </div>
+                            <?php
+              $show_promo="SELECT * FROM promotions ORDER BY promo_id desc";
+              $qr_show_promo=$conn->query($show_promo);
+                            ?>
                             <div class="form-group col-md-3">
+                                <label for="promo">รหัสโปรโมชั่น</label>
+                                <select class="select2 form-control" name="promo" id="promo">
+                                    <option value="">--- โปรโมชั่นเริ่มต้น ---</option>
+                                    <?php while($row_show_promo=$qr_show_promo->fetch_assoc()){ ?>
+                                    <option value="<?= $row_show_promo['promo_code'] ?>">
+                                        <?= $row_show_promo['promo_code'] .' | '. $row_show_promo['promo_note']?>
+                                    </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
                                 <label for="name">วันที่ครบกำหนดต่อภาษี</label>
-                                <input name="duetax" type="text" id="duetax" value="" size="50"
+                                <input name="tax_exp" type="text" id="duetax" value="" size="50"
                                     placeholder="เลือกวันที่ครบกำหนดต่อภาษี" class="form-control form-control-sm"
                                     required readonly>
                             </div>
                         </div>
-
                         <hr style="border-color:green;">
                         <div class="row">
                             <div class="form-check form-group col-md-2">
                                 <label>
-                                    <input type="radio" name="user_existing" value="user_old" onclick="checkUser(this.value)" checked> <span
-                                        class="label-text">USER ที่มีอยู่แล้ว</span>
+                                    <input type="radio" name="user_existing" id="user_existing" value="user_old"
+                                        onclick="checkUser(this.value)" checked> <span class="label-text">USER
+                                        ที่มีอยู่แล้ว</span>
                                 </label>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="select_user">User <font class="t-red">(ย่อย ที่มีอยู่แล้ว)</font></label>
                                 <select name="select_user" id="select_user" class="select2 form-control form-control-sm"
                                     onchange="checkselectUser(this.value)">
-                                    <option>เลือก USER</option>
+                                    <option selected disabled>-------เลือก USER-------</option>
                                     <?php
                                     $sql_custo = "SELECT * FROM customer";
                                     $re_cus = $conn->query($sql_custo);
@@ -492,10 +510,13 @@ body {
                         <div class="row">
                             <div class="form-check form-group col-md-2">
                                 <label>
-                                    <input type="radio" name="user_existing" value="user_new" onclick="checkUser(this.value)"> <span class="label-text">USER
+                                    <input type="radio" name="user_existing" value="user_new"
+                                        onclick="checkUser(this.value)"> <span class="label-text">USER
                                         ใหม่</span>
                                 </label>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="form-group col-md-3">
                                 <label for="phone">User <font class="t-red">(ย่อย)</font> </label>
                                 <input name="phone" type="text" id="phone" value="" size="20"
@@ -506,24 +527,53 @@ body {
                                 <input name="main_user" type="text" id="main_user" value="" size="20"
                                     placeholder="username หลัก" class="form-control form-control-sm" readonly="true">
                             </div>
-
                         </div>
                         <div class="row">
                             <div class="form-group col-md-3">
                                 <label for="name">ชื่อผู้ประกอบการณ์</label>
                                 <input name="name" type="text" id="name" value="" size="50"
-                                    placeholder="ชื่อผู้ประกอบการณ์" class="form-control form-control-sm" required readonly="true">
+                                    placeholder="ชื่อผู้ประกอบการณ์" class="form-control form-control-sm" required
+                                    readonly="true">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="contrack">ที่อยู่</label>
                                 <input name="contrack" type="text" id="contrack" value="" size="20"
-                                    placeholder="ที่อยู่ส่งเอกสาร" class="form-control form-control-sm" required readonly="true">
+                                    placeholder="ที่อยู่ส่งเอกสาร" class="form-control form-control-sm" required
+                                    readonly="true">
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="tel_contact">เบอร์โทรติดต่อ</label>
                                 <input name="tel_contact" type="text" id="tel_contact" value="" size="50"
-                                    placeholder="เบอร์โทรติดต่อ" class="form-control form-control-sm" required readonly="true">
+                                    placeholder="เบอร์โทรติดต่อ" class="form-control form-control-sm" required
+                                    readonly="true">
                             </div>
+                        </div>
+                        <hr style="border-color:green;">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="education">ชื่อคนเซ็น + ตำแหน่ง</label>
+                                <div class="form-inline">
+                                    <select name=education id="education" class="form-control form-control-sm  col">
+                                        <option value="นางสาวกันตณา ยี่จันทึก" selected="selected">นา</option>
+                                        <option value="นายรัตนพล ธนะโสภณ">เปิ้ล</option>
+                                        <option value="นายวีรวิขญ์ จิตรคูณเศรษฐ์">wit</option>
+                                        <option value="ว่าที่ ร.ต. เจษฎา  พรหมกุลจันทร์">เจษฎา ระยอง</option>
+                                        <option value="นายโชคชัย ไชยพิพัฒนขจร">นายโชคชัย ไชยพิพัฒนขจร (Dealer จ.เลย)
+                                        </option>
+                                        <option value="นาย ณัฐพงษ์ แสนจำลา">นาย ณัฐพงษ์ แสนจำลา (Dealer จ.101)</option>
+                                        <option value="นาย ธนากร นิ่มวิไลย">นาย ธนากร นิ่มวิไลย (Dealer จ.ชัยนาท)
+                                        </option>
+                                        <option value="นาย ทวี ลิ้มเจริญ">นาย ทวี ลิ้มเจริญ (Dealer จ.ชัยนาท2)</option>
+                                        <option value="นาย เพชร ทองเฟื้อง">นาย เพชร ทองเฟื้อง (Dealer จ.ระยอง)</option>
+                                    </select>
+                                    &nbsp;
+                                    <select name=work class="form-control form-control-sm col">
+                                        <option value="กรรมการ">กรรมการ</option>
+                                        <option value="Service Area Manager">Service Area Manager</option>
+                                    </select>
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>
@@ -546,93 +596,62 @@ body {
                 </div>
             </div>
             </div>
-            <script src="vendor\datetimepicker\jquery.datetimepicker.full.js" charset="utf-8"></script>
-            <script src="vendor/select2/js/select2.min.js"></script>
-            <script src="js\app\radio.js"></script>
-            <script>
-            $(document).ready(function() {
-                $('.select2').select2();
-            });
-            </script>
-            <script language="javascript">
-            function check() {
-                if (document.checkForm.user_name.value == "") {
-                    alert("กรุณากรอกเลขคัดซีด้วยครับ");
-                    document.checkForm.user_name.focus();
-                    return false;
-                }
-                if (document.checkForm.amper.value == "") {
-                    alert("กรุณากรอกทะเบียนรถด้วยครับ");
-                    document.checkForm.amper.focus();
-                    return false;
-                }
-                if (document.checkForm.province2.value == "") {
-                    alert("กรุณาเลือกจังหวัด");
-                    document.checkForm.province2.focus();
-                    return false;
-                }
-                if (document.checkForm.simno.value == "") {
-                    alert("กรอกเบอร์");
-                    document.checkForm.simno.focus();
-                    return false;
-                }
-                if (isNaN(document.checkForm.simno.value)) {
-                    alert("เบอร์โทรกรอกเฉพาะตัวเลข");
-                    document.checkForm.simno.focus();
-                    return false;
-                }
 
-                if (document.checkForm.zipcode.value == "") {
-                    alert("กรอกเบอร์ IEMI");
-                    document.checkForm.zipcode.focus();
-                    return false;
-                }
-                if (document.checkForm.phone.value == "") {
-                    alert("กรอก USER ");
-                    document.checkForm.phone.focus();
-                    return false;
-                }
-                if (document.checkForm.name.value == "") {
-                    alert("กรุณากรอกชื่อ-นามสกุลด้วยครับ");
-                    document.checkForm.name.focus();
-                    return false;
-                }
-                if (isNaN(document.checkForm.year.value)) {
-                    alert("กรุณากรอกเฉพาะตัวเลขนะครับ");
-                    document.checkForm.year.focus();
-                    return false;
-                } else if (document.checkForm.age.value == "") {
-                    alert("กรุณากรอกอายุด้วยครับ");
-                    document.checkForm.age.focus();
-                    return false;
-                } else if (isNaN(document.checkForm.age.value)) {
-                    alert("กรุณากรอกอายุด้วยตัวเลขเท่านั้นครับ");
-                    document.checkForm.age.focus();
-                    return false;
-                } else if (document.checkForm.province.selectedIndex == 0) {
-                    alert("กรุณาระบุจังหวัดที่ท่านอยู่ด้วยครับ");
-                    return false;
-                } else if (isNaN(document.checkForm.zipcode.value)) {
-                    alert("รหัสไปรษณีย์ต้องเป็นตัวเลขครับ");
-                    document.checkForm.zipcode.focus();
-                    return false;
-                } else if (document.checkForm.user_name.value == "") {
-                    alert("กรุณาระบุชื่อที่ท่านต้องการใช้ในการเข้าระบบด้วยครับ");
-                    document.checkForm.user_name.focus();
-                    return false;
-                } else if (document.checkForm.pwd_name1.value == "") {
-                    alert("กรุณากรอกรหัสผ่านที่ต้องการด้วยครับ");
-                    document.checkForm.pwd_name1.focus();
-                    return false;
-                } else if (document.checkForm.pwd_name2.value == "") {
-                    alert("กรุณายืนยันรหัสผ่านอีกครั้ง");
-                    document.checkForm.pwd_name2.focus();
-                    return false;
-                } else
-                    return true;
-            }
-            </script>
         </form>
+
+        <script src="vendor\datetimepicker\jquery.datetimepicker.full.js" charset="utf-8"></script>
+        <script src="vendor/select2/js/select2.min.js"></script>
+        <script src="js\app\add_member.js"></script>
+        <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+        </script>
+        <script language="javascript">
+        function check() {
+        if(document.checkForm.user_name.value == "") {
+          alert('กรุณากรอกเลขคัดซีด้วยครับ');
+          document.checkForm.user_name.focus();
+          return false;
+        } else if (document.checkForm.dillDate.value == "") {
+          alert("กรุณากรอกรอบบิลถัดไป");
+          document.checkForm.dillDate.focus();
+          return false;
+        } else if (document.checkForm.amper.value == "") {
+          alert("กรุณากรอกทะเบียนรถด้วยครับ");
+          document.checkForm.amper.focus();
+          return false;
+        } else if (document.checkForm.province2.value == "") {
+          alert("กรุณาเลือกจังหวัด");
+          document.checkForm.province2.focus();
+          return false;
+        } else if (document.checkForm.simno.value == "") {
+          alert("กรอกเบอร์");
+          document.checkForm.simno.focus();
+          return false;
+        } else if (isNaN(document.checkForm.simno.value)) {
+          alert("เบอร์โทรกรอกเฉพาะตัวเลข");
+          document.checkForm.simno.focus();
+          return false;
+        } else if (document.checkForm.zipcode.value == "") {
+          alert("กรอกเบอร์ IEMI");
+          document.checkForm.zipcode.focus();
+          return false;
+        } else if (document.checkForm.phone.value == "") {
+          alert("กรอก USER ");
+          document.checkForm.phone.focus();
+          return false;
+        } else if (document.checkForm.name.value == "") {
+          alert("กรุณากรอกชื่อ-นามสกุลด้วยครับ");
+          document.checkForm.name.focus();
+          return false;
+        } else if (document.checkForm.tax_exp.value == "") {
+          alert("กรุณาเลือกวันที่ครบกำหนดต่อภาษี");
+          document.checkForm.tax_exp.focus();
+          return false;
+        }
+      }
+        </script>
 </body>
 
 </html>

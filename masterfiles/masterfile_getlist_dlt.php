@@ -62,7 +62,7 @@
 		print_r($result);
 	}
 
-	$url = 'https://gpsservice.dlt.go.th/masterfile/getList/0/2000';
+	$url = 'https://gpsservice.dlt.go.th/masterfile/getList/0/3000';
 	$login="mirada";
 	$password="XNpA32WCdcUb";
 	$result = get_json($url,$login,$password);

@@ -1,10 +1,8 @@
 function checkselectUser(id) {
-
     console.log(id);
 }
 
 function checkUser(user) {
-
     if (user == 'user_new') {
         document.getElementById('phone').removeAttribute('readonly');
         document.getElementById('main_user').removeAttribute('readonly');
@@ -19,6 +17,8 @@ function checkUser(user) {
         document.getElementById('tel_contact').readOnly = "true";
     }
     console.log(user);
+}
 
+function insertData() {
 
 }

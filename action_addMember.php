@@ -1,5 +1,6 @@
 <?php
 // session_start() ;
+require_once 'all_function.php';
 include('config.php');
 /* add by kergrit(redthird.com) for compatible global variable off/on php.ini */
 $name = $_POST['name'];
@@ -112,6 +113,24 @@ $user_name = $_POST['user_name'];
 $register_type = $_POST['register_type'];
 $province2 = $_POST['province2'];
 $email = $_POST['email'];
+$tax_exp = DateYMD($_POST['tax_exp']);
+$user_existing = $_POST['user_existing'];
+$promo = $_POST['promo'];
+
+if ($user_existing == 'user_new') {
+	$sql_newuser = "INSERT INTO customer values  ('','$name','$phone','$main_user','','$contrack','','','$tel_contact','',NOW())";
+	$result_newuser = $conn->query($sql_newuser);
+	if ($result_newuser) {
+		$select_user = $conn->insert_id;
+	}else{
+		echo $conn->error;
+	}
+
+}elseif($user_existing == 'user_old'){
+	$select_user = $_POST['select_user'];
+}
+
+
 // $Submit = $_POST['Submit'];
 // $ok = $_POST['ok'];
 /* end of add */
@@ -180,21 +199,21 @@ $member_in = "000$member_db" ;
 }
 
 $member_id = $member_in; //
-$insert_member="insert into member (name,date,year,address,amper,zipcode,phone,education,
-work,user,email,car_approve_id,register_type,province2,signup,sim,simno,member_id,age,sex,contrack,tel_contact, gpsmodel1, main_user,province)
+echo $insert_member="insert into member (name,date,year,address,amper,zipcode,phone,education,
+work,user,email,car_approve_id,register_type,province2,signup,sim,simno,member_id,age,sex,contrack,tel_contact, gpsmodel1, main_user,province,cus_id,tax_exp,promo)
         values('$name','$date','$year','$address','$amper','$imei',
         '$phone','$education','$work','$user_name','$email','$car_approve_id',
-        '$register_type','$province2',NOW(),'$sim','$simno','$member_id','$age','$sex', '$contrack', '$tel_contact', '$gpsmodel', '$main_user','$province')";
+        '$register_type','$province2',NOW(),'$sim','$simno','$member_id','$age','$sex', '$contrack', '$tel_contact', '$gpsmodel', '$main_user','$province','$select_user','$tax_exp','$promo')";
 $result = mysqli_query($conn, $insert_member);
 
 if($result) {
 // $_SESSION['login_true'] = $user_name;
 echo "<script> alert('บันทึกข้อมูลสำเร็จ') </script>";
-echo "<meta http-equiv='refresh' content='0; url=?p=main_admin'>" ;
+// echo "<meta http-equiv='refresh' content='0; url=?p=main_admin'>" ;
 }else {
   echo $insert_member;
   echo "<script> alert('บันทึกข้อมูลไม่สำเร็จ รบกวน Copy โค้ดส่งให้ผู้ดูแลเพื่อตรวจสอบ') </script>";
-  echo "<a href='add_member.php'>กลับหน้าเพิ่มข้อมูล</a>" ;
+//   echo "<a href='add_member.php'>กลับหน้าเพิ่มข้อมูล</a>" ;
 
 }
 
