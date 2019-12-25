@@ -1,27 +1,47 @@
 <?php
 // session_start() ;
-// include("config.php") ;
+include('config.php');
 /* add by kergrit(redthird.com) for compatible global variable off/on php.ini */
 $name = $_POST['name'];
 $date = $_POST['date'];
+
+$tax_no=$_POST['tax_no'];
+$dillDate=DateYMD($_POST['dillDate']);
 // $month = $_POST['month'];
 $car_approve_id = $_POST['car_approve_id'];
-if ($car_approve_id=="VT_1") {
-		//ธรรมดา VT900
+	if ($car_approve_id=="VT") {
+		# ธรรมดา VT900
 		$car_approve_id="207/2560";
 		$gpsmodel="VT900";
-	}elseif ($car_approve_id=="VT_2") {
+		
+	}elseif ($car_approve_id=="VT(U)") {
 		# URI VT900
 		$car_approve_id="207/2560";
 		$gpsmodel="VT900(U)";
-	}elseif ($car_approve_id=="VT_3") {
+
+	}elseif ($car_approve_id=="VT(A)") {
 		# AUNDAMAN VT900
 		$car_approve_id="207/2560";
 		$gpsmodel="VT900(A)";
-	}elseif ($car_approve_id=="T333") {
+	}elseif ($car_approve_id=="VT(Box)") {
+		# AUNDAMAN VT900
+		$car_approve_id="207/2560";
+		$gpsmodel="VT900(Box)";
+	}
+	elseif ($car_approve_id=="VT(Box)(A)") {
+		# AUNDAMAN VT900
+		$car_approve_id="207/2560";
+		$gpsmodel="VT900(Box)(A)";
+	}
+	elseif ($car_approve_id=="VT(Box)(U)") {
+		# AUNDAMAN VT900
+		$car_approve_id="207/2560";
+		$gpsmodel="VT900(Box)(U)";
+	}
+	elseif ($car_approve_id=="T333") {
 		# T333
 		$car_approve_id="132/2559";
-		$gpsmodel="T333";		
+		$gpsmodel="T333";
 	}elseif ($car_approve_id=="AW") {
 		# AW...
 		$car_approve_id="218/2560";
@@ -30,25 +50,25 @@ if ($car_approve_id=="VT_1") {
 		# T1...
 		$car_approve_id="201/2560";
 		$gpsmodel="T1";
-	}elseif ($car_approve_id=="GT06E") {
-		# GT06E...
+	}elseif ($car_approve_id=="GT06E(Box)") {
+		# GT06E Box
 		$car_approve_id="224/2560";
 		$gpsmodel="GT06E";
-	}elseif ($car_approve_id=="GT06E(Box)") {
+	}elseif ($car_approve_id=="GT06E") {
 		# GT06E...
 		$car_approve_id="224/2560";
 		$gpsmodel="GT06E";
 	}elseif ($car_approve_id=="tk103") {
 		# TK103...
-		$car_approve_id="tk103";
+		$car_approve_id="non-approve";
 		$gpsmodel="tk103";
 	}elseif ($car_approve_id=="fm11") {
 		# Teltonika FM1100...
-		$car_approve_id="fm11";
+		$car_approve_id="non-approve";
 		$gpsmodel="fm11";
 	}elseif ($car_approve_id=="ts107") {
 		# TS107...
-		$car_approve_id="ts107";
+		$car_approve_id="non-approve";
 		$gpsmodel="ts107";
 	}elseif ($car_approve_id=="MVT380") {
 		# MVT380...
@@ -67,25 +87,28 @@ if ($car_approve_id=="VT_1") {
 		$car_approve_id="non-approve";
 		$gpsmodel="ST901";
 	}
+
 $year = $_POST['year'];
 $age = $_POST['age'];
-$sex = $_POST['sex'];
+$sex = trim($_POST['sex']);
 $address = $_POST['address'];
 $amper = $_POST['amper'];
 // $province = $_POST['province'];
-$imeiall = isset($_POST['imeiall']);
+$simall = $_POST['simall'];
+$imeiall = $_POST['imeiall'];
 $phone = $_POST['phone'];
+$main_user = $_POST['main_user'];
 $education = $_POST['education'];
-$uid = 0;
+// $uid = $_POST['uid'];
 $work = $_POST['work'];
-
 $contrack = $_POST['contrack'];
 $tel_contact = $_POST['tel_contact'];
 // $datesetup = $_POST['datesetup'];
 // $telgps = $_POST['telgps'];
 // $passgps = $_POST['passgps'];
-// $tech = $_POST['tech'];
+$tech = $_POST['tech'];
 // $poc = $_POST['poc'];
+$promo = $_POST['promo'];
 
 $user_name = $_POST['user_name'];
 // $pwd_name1 = $_POST['pwd_name1'];
@@ -95,10 +118,8 @@ $province2 = $_POST['province2'];
 $email = $_POST['email'];
 // $Submit = $_POST['Submit'];
 // $ok = $_POST['ok'];
- $sim = $_POST['sim'];
- $simno = $_POST['simno'];
- $zipcode = $_POST['zipcode'];
- $login=$_SESSION['login_true_admin'];
+/* end of add */
+
 
 $sql_pro="SELECT * FROM province_code";
 $rs_pro=$conn->query($sql_pro);
@@ -107,7 +128,6 @@ while ($r_pro=$rs_pro->fetch_array()) {
 		$province=$r_pro['name'];
 	}
 }
-/* end of add */
 ?>
 
 <html>
@@ -119,6 +139,9 @@ while ($r_pro=$rs_pro->fetch_array()) {
 <body>
 <?php
 
+$sim = substr($simall,0,1);
+$simno = substr($simall,1,10);
+$zipcode = $imeiall;
 
 // if($name=="" || $age=="" || $user_name=="" || $email=="") {
 // echo "มา 1";
@@ -130,9 +153,6 @@ if((isset($ok)) and ($ok!="ok_pass")) {
   echo "มา 1";
 // echo "<meta http-equiv='refresh' content='0; url=signup.php'>" ;
 }
-
-$signup = date("j/n/").(date("Y")+543) ;
-
 //ถ้าคัดซีซ้ำ
 $sql = "select * from member where user='$user_name'" ;
 $result = mysqli_query($conn, $sql) ;
@@ -143,7 +163,7 @@ echo "<br><br><center><font size='3' face='MS Sans Serif'>เลขคัดซ�
 echo "<p style='color:red'>================================================================================================================ <br> <br>";
 echo $rowcheck['comment']."<br> <br>";
 echo "================================================================================================================ <br></p>";
-echo ' <a href="?p=add_member_tech"> <button type="button" class="btn btn-warning" name="button">กลับ</button></a>';
+echo ' <a href="add_member.php"> <button type="button" class="btn btn-warning" name="button">กลับ</button></a>';
 exit() ;
 }
 
@@ -165,20 +185,26 @@ $member_in = "000$member_db" ;
 }
 }
 
-$member_id = $member_in;
+$member_id = $member_in; //
 $insert_member="insert into member (name,date,year,address,amper,zipcode,phone,education,
-work,user,email,uid,car_approve_id,register_type,province2,signup,sim,simno,member_id,age,stamp_staff,sex,contrack,tel_contact,gpsmodel1,province)
+work,user,email,car_approve_id,register_type,province2,signup,sim,simno,member_id,age,sex,contrack,tel_contact, gpsmodel1, main_user,province,taxpayer_no,dill,tech,promo)
         values('$name','$date','$year','$address','$amper','$zipcode',
-        '$phone','$education','$work','$user_name','$email','$uid','$car_approve_id',
-        '$register_type','$province2',NOW(),'$sim','$simno','$member_id','$age','$login','$sex','$contrack','$tel_contact', '$gpsmodel','$province')";
+        '$phone','$education','$work','$user_name','$email','$car_approve_id',
+        '$register_type','$province2',NOW(),'$sim','$simno','$member_id','$age','$sex', '$contrack', '$tel_contact', '$gpsmodel', '$main_user','$province','$tax_no','$dillDate', '$tech','$promo')";
 $result = mysqli_query($conn, $insert_member);
 
 if($result) {
-$_SESSION['login_true'] = $user_name;
+// $_SESSION['login_true'] = $user_name;
 echo "<script> alert('บันทึกข้อมูลสำเร็จ') </script>";
 echo "<meta http-equiv='refresh' content='0; url=?p=main_tech'>" ;
+}else {
+  echo $insert_member;
+  echo "<script> alert('บันทึกข้อมูลไม่สำเร็จ รบกวน Copy โค้ดส่งให้ผู้ดูแลเพื่อตรวจสอบ') </script>";
+  echo "<a href='add_member.php'>กลับหน้าเพิ่มข้อมูล</a>" ;
+
 }
 
 ?>
 </body>
+
 </html>

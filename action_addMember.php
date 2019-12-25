@@ -1,10 +1,12 @@
 <?php
 // session_start() ;
-require_once 'all_function.php';
 include('config.php');
 /* add by kergrit(redthird.com) for compatible global variable off/on php.ini */
 $name = $_POST['name'];
 $date = $_POST['date'];
+
+$tax_no=$_POST['tax_no'];
+$dillDate=DateYMD($_POST['dillDate']);
 // $month = $_POST['month'];
 $car_approve_id = $_POST['car_approve_id'];
 	if ($car_approve_id=="VT") {
@@ -92,8 +94,8 @@ $sex = trim($_POST['sex']);
 $address = $_POST['address'];
 $amper = $_POST['amper'];
 // $province = $_POST['province'];
-$simall = $_POST['sim'];
-$imei = $_POST['imei'];
+$simall = $_POST['simall'];
+$imeiall = $_POST['imeiall'];
 $phone = $_POST['phone'];
 $main_user = $_POST['main_user'];
 $education = $_POST['education'];
@@ -104,8 +106,9 @@ $tel_contact = $_POST['tel_contact'];
 // $datesetup = $_POST['datesetup'];
 // $telgps = $_POST['telgps'];
 // $passgps = $_POST['passgps'];
-// $tech = $_POST['tech'];
+$tech = $_POST['tech'];
 // $poc = $_POST['poc'];
+$promo = $_POST['promo'];
 
 $user_name = $_POST['user_name'];
 // $pwd_name1 = $_POST['pwd_name1'];
@@ -113,27 +116,10 @@ $user_name = $_POST['user_name'];
 $register_type = $_POST['register_type'];
 $province2 = $_POST['province2'];
 $email = $_POST['email'];
-$tax_exp = DateYMD($_POST['tax_exp']);
-$user_existing = $_POST['user_existing'];
-$promo = $_POST['promo'];
-
-if ($user_existing == 'user_new') {
-	$sql_newuser = "INSERT INTO customer values  ('','$name','$phone','$main_user','','$contrack','','','$tel_contact','',NOW())";
-	$result_newuser = $conn->query($sql_newuser);
-	if ($result_newuser) {
-		$select_user = $conn->insert_id;
-	}else{
-		echo $conn->error;
-	}
-
-}elseif($user_existing == 'user_old'){
-	$select_user = $_POST['select_user'];
-}
-
-
 // $Submit = $_POST['Submit'];
 // $ok = $_POST['ok'];
 /* end of add */
+
 
 $sql_pro="SELECT * FROM province_code";
 $rs_pro=$conn->query($sql_pro);
@@ -155,6 +141,7 @@ while ($r_pro=$rs_pro->fetch_array()) {
 
 $sim = substr($simall,0,1);
 $simno = substr($simall,1,10);
+$zipcode = $imeiall;
 
 // if($name=="" || $age=="" || $user_name=="" || $email=="") {
 // echo "มา 1";
@@ -199,21 +186,21 @@ $member_in = "000$member_db" ;
 }
 
 $member_id = $member_in; //
-echo $insert_member="insert into member (name,date,year,address,amper,zipcode,phone,education,
-work,user,email,car_approve_id,register_type,province2,signup,sim,simno,member_id,age,sex,contrack,tel_contact, gpsmodel1, main_user,province,cus_id,tax_exp,promo)
-        values('$name','$date','$year','$address','$amper','$imei',
+$insert_member="insert into member (name,date,year,address,amper,zipcode,phone,education,
+work,user,email,car_approve_id,register_type,province2,signup,sim,simno,member_id,age,sex,contrack,tel_contact, gpsmodel1, main_user,province,taxpayer_no,dill,tech,promo)
+        values('$name','$date','$year','$address','$amper','$zipcode',
         '$phone','$education','$work','$user_name','$email','$car_approve_id',
-        '$register_type','$province2',NOW(),'$sim','$simno','$member_id','$age','$sex', '$contrack', '$tel_contact', '$gpsmodel', '$main_user','$province','$select_user','$tax_exp','$promo')";
+        '$register_type','$province2',NOW(),'$sim','$simno','$member_id','$age','$sex', '$contrack', '$tel_contact', '$gpsmodel', '$main_user','$province','$tax_no','$dillDate', '$tech','$promo')";
 $result = mysqli_query($conn, $insert_member);
 
 if($result) {
 // $_SESSION['login_true'] = $user_name;
 echo "<script> alert('บันทึกข้อมูลสำเร็จ') </script>";
-// echo "<meta http-equiv='refresh' content='0; url=?p=main_admin'>" ;
+echo "<meta http-equiv='refresh' content='0; url=?p=main_admin'>" ;
 }else {
   echo $insert_member;
   echo "<script> alert('บันทึกข้อมูลไม่สำเร็จ รบกวน Copy โค้ดส่งให้ผู้ดูแลเพื่อตรวจสอบ') </script>";
-//   echo "<a href='add_member.php'>กลับหน้าเพิ่มข้อมูล</a>" ;
+  echo "<a href='add_member.php'>กลับหน้าเพิ่มข้อมูล</a>" ;
 
 }
 

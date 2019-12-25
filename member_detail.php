@@ -263,18 +263,18 @@ LEFT JOIN `canceler_service` ON `canceler_service`.`member_id` = `member`.`id` "
                   <td class="text-center">
                     <form action="" method="post">
                       <a href="?p=edit&user=<?= $row['user'] ?>" title="แก้ไข">
-                        <button type="button" id="edit" name="edit" class="btn btn-success btn-sm">
+                        <button type="button" id="edit<?= $row['id'] ?>" name="edit" class="btn btn-success btn-sm">
                           <i class="fa fa-edit"></i>
                         </button>
                       </a>
                       <a href="?p=detail&user=<?= $row['user'] ?>" title="พิมพ์เอกสาร">
                         <!-- ปุ่มปริ้นเอกสาร -->
-                        <button type="button" id="print" name="print" class="btn btn-info btn-sm">
+                        <button type="button" id="print<?= $row['id'] ?>" name="print" class="btn btn-info btn-sm">
                           <i class="fa fa-print"></i>
                         </button>
                       </a>
                       <!-- ปุ่มลบ -->
-                      <button type="submit" id="del" name="del" value="<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('ยืนยันการลบ')">
+                      <button type="submit" id="del<?= $row['id'] ?>" name="del" value="<?= $row['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('ยืนยันการลบ')">
                         <i class="fa fa-trash" title="ลบ"></i></button>
                       <?= $row['cancel']; ?>
                     </form>

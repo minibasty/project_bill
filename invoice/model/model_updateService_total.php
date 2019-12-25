@@ -26,6 +26,9 @@
     }elseif ($vatStr==7) {
         $vat = number_format(($price * (7/100)),2 , '.', '');
         $priceSum = number_format(($vat + $price),2 , '.', '');
+    }else{
+        $vat = number_format(($price * 0),2 , '.', '');
+        $priceSum = number_format(($vat + $price),2 , '.', '');
     }
     
     $withholding = number_format(($price * ($row_invoice['inv_withholding']/100)),2 , '.', '');

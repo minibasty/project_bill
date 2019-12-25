@@ -10,3 +10,7 @@ table {
     color: white;
     font-weight: bold;
 }
+
+.f-small{
+    font-size: small;
+}

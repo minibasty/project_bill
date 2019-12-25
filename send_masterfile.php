@@ -22,17 +22,12 @@
       color: #000000;
       font-weight: bold;
     }
-    @font-face {
-      font-family: 'Designil Font', 'Helvetica', sans-serif;
-      unicode-range: U+0E00–U+0E7F;
-    }
+
     .bg_opticity{
         opacity: 0.9;
         background-color: #C3B086;
       }
-      .bg_body{
-      
-      }
+
     .menu_cs{
       font-weight: bold;
       color: #000000;

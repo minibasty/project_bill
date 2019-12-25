@@ -60,7 +60,7 @@ if (isset($_SESSION['login_true']) == "") {
     </style>
 
 
-    <script src="js/sweetalert.min.js" type="text/javascript" charset="utf-8" async defer></script>
+    
 
     <!-- Bootstrap core JavaScript -->
 
@@ -69,6 +69,8 @@ if (isset($_SESSION['login_true']) == "") {
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="vendor/select2/js/select2.full.min.js"></script>
     <script type="text/javascript" src="vendor\datetimepicker\jquery.datetimepicker.full.js" charset="utf-8"></script>
+    <!-- <script src="js/sweetalert2.all.min.js"></script> -->
+    <script src="js/sweetalert.min.js" type="text/javascript" charset="utf-8" async defer></script>
     <script src="js/fontawesome-pro.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
 
@@ -141,7 +143,7 @@ if (isset($_SESSION['login_true']) == "") {
             <button class="btn btn-primary" id="menu-toggle"><i class="fas fa-bars"></i></button>
           </div>
           <div class="col text-right">
-            <a href="logout.php"><button class="btn btn-danger mt-auto" id="menu-toggle" type="button"><i class="fas fa-sign-out-alt"></i> Logout</button></a>
+            <a href="logout.php"><button class="btn btn-danger btn-sm mt-auto" id="menu-toggle" type="button"><i class="far fa-sign-out-alt"></i> Logout</button></a>
           </div>
         </nav>
 

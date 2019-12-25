@@ -94,7 +94,7 @@ $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
 								<div class="form-row">
 									<div class="col">จำนวนทั้งหมด <font color=red><?= $total ?></font> รายการ</div>
 									<div class="col text-right">
-										<a href="?p=invoice_add" target="_blank" rel="noopener noreferrer">
+										<a href="?p=invoice_add" target="" rel="noopener noreferrer">
 											<button type="button" class="btn btn-sm btn-primary">
 												<span class="fa fa-plus"></span>
 												เพิ่มใบเสร็จรับเงิน

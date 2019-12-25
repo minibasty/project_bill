@@ -51,3 +51,7 @@ div .alert-red{
   .checkbox-3 input {
     display: none;
   }
+
+  .service-carlist{
+    font-size : small;
+  }

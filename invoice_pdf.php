@@ -100,12 +100,12 @@
     $contents .= '<tr>
     
     <th width="5%">' . $i_service . '</th>
-    <th align="left" width="40%">' . $result_ser['inv_list_name'] . ' | ' . $result_ser['inv_service_detail'] . ' ';
+    <th align="left" width="40%" class="f-small">' . $result_ser['inv_list_name'] . ' | ' . $result_ser['inv_service_detail'] . ' ';
     echo $sql_items = "SELECT * FROM v_service_items WHERE  inv_service_id = $result_ser[inv_service_id]";
     $query_items = $conn->query($sql_items);
     $countItems = $query_items->num_rows;
     while ($result_items = $query_items->fetch_assoc()) {
-      $contents .= '('.$result_items['address'].'/'.$result_items['amper']. '/'.$result_items['user']. '), ';
+      $contents .= '<span class="f-small">('.$result_items['address'].'/'.$result_items['amper']. '/'.$result_items['user']. ')</span>, ';
     }
 
     $contents .= '</th>

@@ -69,7 +69,7 @@
     </style>
 </head>
 <?php
-
+$inv_id = 0;
 // Query invoice if have param inv
 if (isset($_GET['inv'])) {
     $inv_id = $_GET['inv'];
@@ -85,7 +85,7 @@ $inv_company  = isset($row_invoice['inv_company']) ? $row_invoice['inv_company']
 $inv_name  = isset($row_invoice['inv_name']) ? $row_invoice['inv_name'] : '';
 $inv_tel  = isset($row_invoice['inv_tel']) ? $row_invoice['inv_tel'] : '';
 $inv_user  = isset($row_invoice['cus_user']) ? $row_invoice['cus_user'] : '';
-$inv_mail  = isset($row_invoice['inv_mail']) ? $row_invoice['inv_mail'] : '';
+$inv_mail  = isset($row_invoice['inv_email']) ? $row_invoice['inv_email'] : '';
 $inv_date  = isset($row_invoice['inv_date']) ? $row_invoice['inv_date'] : '';
 
 
@@ -108,30 +108,30 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                     <div class="form-row justify-content-between">
                         <?php
                         if (!isset($_GET['inv'])) {
-                            ?>
-                            <div class="form-group col-md-3">
+                        ?>
+                            <div class="form-group col-md-4">
                                 <label for="customer">ชื่อลูกค้า</label>
                                 <select class="form-control select2 form-control-sm" name="customer" id="customer" onchange="getAddressCus(this.value)">
                                     <option value="" disabled selected hidden> >--- เลือกรายการลูกค้า ---< </option> <?php
-                                                                                                                            $sql_customer = "SELECT * FROM customer";
-                                                                                                                            $qr_customer = $conn->query($sql_customer);
-                                                                                                                            while ($rowsCustomer = $qr_customer->fetch_assoc()) {
-                                                                                                                                ?> <option value="<?= $rowsCustomer['cus_id'] ?>">
+                                                                                                                        $sql_customer = "SELECT * FROM customer";
+                                                                                                                        $qr_customer = $conn->query($sql_customer);
+                                                                                                                        while ($rowsCustomer = $qr_customer->fetch_assoc()) {
+                                                                                                                        ?> <option value="<?= $rowsCustomer['cus_id'] ?>">
                                             <?= $rowsCustomer['cus_user'] ?> | <?= $rowsCustomer['cus_name'] ?></option>
                                 <?php
-                                    }
-                                    ?>
+                                                                                                                        }
+                                ?>
                                 </select>
                                 <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label for="date1">ลงวันที่</label>
 
                                 <input type="text" id="billDate" class="form-control form-control-sm" size="10" name="billDate" onchange="changeinvNumber(this.value)" autocomplete="off" readonly>
                                 <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                             </div>
                         <?php } ?>
-                        <div id="invoice-number" class="form-group col-md-6 align-self-center bg-info p-2 text-white">
+                        <div id="invoice-number" class="form-group col-md-4 align-self-center bg-info p-2 text-white">
                             <label for="">เลขที่ :</label>
                             <span id="numberBillShow"><?= $invNo_all ?></span>
                             <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
@@ -154,7 +154,10 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                             <thead>
                                 <tr>
                                     <th class="text-right">วันที่</th>
-                                    <td><input type="text" readonly class="form-control-plaintext form-control-sm" id="dateThai" value="<?= $inv_date; ?>"></td>
+                                    <td><input type="text" class="form-control-plaintext form-control-sm" id="dateThai" value="<?= $inv_date; ?>" readonly></td>
+                                    <?php if ($inv_id != 0) { ?>
+                                        <th colspan="2" class="text-right"> <button type="button" class="btn btn-info btn-sm " name="edit_cus" id="edit_cus" onclick="editCustomer()"><i class="fad fa-edit"></i> แก้ไขข้อมูลลูกค้า</button></th>
+                                    <?php } ?>
                                 </tr>
                             </thead>
                             <thead>
@@ -199,18 +202,10 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                                 </tr>
                             </tbody>
                         </table>
-                        <?php
-                        if (!isset($_GET['inv'])) {
-                            ?>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-info btn-sm" name="ok_head"><i class="fad fa-save"></i>
-                                    บันทึก</button>
-                            </div>
-                        <?php } else { ?>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-danger btn-sm" name="del_head"><i class="fad fa-save"></i> ลบใบเสร็จ</button>
-                            </div>
-                        <?php } ?>
+                        <div class="form-group col text-center">
+                            <button type="submit" class="btn btn-sm btn-success" name="ok_head" id="ok_head" style="display: inline"><i class="fad fa-save"></i> บันทึก</button>
+                            <button type="button" class="btn btn-danger btn-sm" name="close_bill" id="close_bill" style="display: none"> <i class="far fa-times"></i> ปิดบิล</button>
+                        </div>
                 </form>
                 <hr>
                 <?php
@@ -218,10 +213,10 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                     $sql_invService = "SELECT * FROM v_service_lists WHERE inv_id = $_GET[inv]";
                     $qr_invService = $conn->query($sql_invService);
                     $countOfService = $qr_invService->num_rows;
-                    ?>
-                    <selection class="col p-0">
+                ?>
+                    <selection id="sevrice_list" class="col p-0" style="display: block">
                         <div class="form-group m-0">
-                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#service_list"> <span class="fa fa-plus"></span> เพิ่มรายการ</button>
+                            <button type="button" class="btn btn-sm btn-primary " data-toggle="modal" data-target="#service_list"> <span class="far fa-plus"></span> เพิ่มรายการ</button>
                         </div>
                         <form action="" method="post">
                             <table id="list" class="table table-bordered table-sm ">
@@ -235,36 +230,39 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                                 </thead>
                                 <tbody>
                                     <?php
-                                        $totalPrice = 0;
-                                        if ($countOfService > 0) {
-                                            while ($row_invService = $qr_invService->fetch_assoc()) {
+                                    $totalPrice = 0;
+                                    $vatStr = 0;
+                                    $priceNovat = 0;
+                                    $totalVat = 0;
+                                    if ($countOfService > 0) {
+                                        while ($row_invService = $qr_invService->fetch_assoc()) {
 
-                                                // list items from service 
-                                                $sql_invItems = "SELECT * FROM v_service_items WHERE inv_service_id = $row_invService[inv_service_id]";
-                                                $qr_invItems = $conn->query($sql_invItems);
-                                                $countOfitems = $qr_invItems->num_rows;
+                                            // list items from service 
+                                            $sql_invItems = "SELECT * FROM v_service_items WHERE inv_service_id = $row_invService[inv_service_id]";
+                                            $qr_invItems = $conn->query($sql_invItems);
+                                            $countOfitems = $qr_invItems->num_rows;
 
-                                                // all Price total
-                                                $totalPrice += $row_invService['inv_total_price'];
+                                            // all Price total
+                                            $totalPrice += $row_invService['inv_total_price'];
 
 
-                                                $inv_service_detail = isset($row_invService['inv_service_detail']) ? $row_invService['inv_service_detail'] : '';
-                                                $inv_total_price = isset($row_invService['inv_total_price']) ? $row_invService['inv_total_price'] : '';
-                                                $inv_service_id = isset($row_invService['inv_service_id']) ? $row_invService['inv_service_id'] : '';
-                                                ?>
+                                            $inv_service_detail = isset($row_invService['inv_service_detail']) ? $row_invService['inv_service_detail'] : '';
+                                            $inv_total_price = isset($row_invService['inv_total_price']) ? $row_invService['inv_total_price'] : '';
+                                            $inv_service_id = isset($row_invService['inv_service_id']) ? $row_invService['inv_service_id'] : '';
+                                    ?>
                                             <tr>
-                                                <td class="text-left"><?= $row_invService['inv_list_name'] ?></td>
-                                                <td class="text-left" style="width : auto">
+                                                <td class="text-left" style="width : 25%; font-size: small;"><?= $row_invService['inv_list_name'] ?></td>
+                                                <td class="text-left" style="width : 45%">
                                                     <i class="fal fa-check" id="okDetail<?= $inv_service_id ?>" style="display: none; color:green"></i>
                                                     <input alt="<?= $row_invService['inv_service_id'] ?>" value="<?= $inv_service_detail ?>" type="text" name="inv_service_detail<?= $row_invService['inv_service_id'] ?>" id="inv_service_detaill<?= $row_invService['inv_service_id'] ?>" onkeydown="return (event.keyCode!=13);" onchange="changeServiceDetail(this.alt, this.value)">
                                                     <?php
-                                                                if ($countOfitems > 0) {
-                                                                    while ($row_items = $qr_invItems->fetch_assoc()) {
-                                                                        echo $row_items['address']."/".$row_items['amper']. "/".$row_items['user']. ", ";
-                                                                    }
-                                                                }
+                                                    if ($countOfitems > 0) {
+                                                        while ($row_items = $qr_invItems->fetch_assoc()) {
+                                                            echo '<span class="service-carlist">' . $row_items['address'] . "/" . $row_items['amper'] . "/" . $row_items['user'] . ', <span>';
+                                                        }
+                                                    }
 
-                                                                ?>
+                                                    ?>
                                                 </td>
                                                 <td style="width : auto"><button type="button" class="btn btn-sm btn-warning btn-block" data-toggle="modal" data-target="#carList" data-whatever="<?= $row_invService['inv_service_id']; ?>"> <i class="fad fa-car"></i> </>
                                                 </td>
@@ -277,34 +275,35 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                                                 </td>
                                             </tr>
                                         <?php
-                                                }  //end while 
-                                                // คำนวณยอดเงิน
-                                                $totalPrice = $totalPrice;
-                                                $vatStrValue = $vatValue;
-                                                if ($vatStrValue == 1) {
-                                                    $vatStr = ($totalPrice - ($totalPrice / 1.07));
-                                                    $priceNovat = ($totalPrice - $vatStr);
-                                                    $totalVat = ($vatStr + $priceNovat);
-                                                } elseif ($vatStrValue == 7) {
-                                                    $vatStr = ($totalPrice * (7 / 100));
-                                                    $priceNovat = ($totalPrice);
-                                                    $totalVat = ($vatStr + $totalPrice);
-                                                }
+                                        }  //end while 
+                                        // คำนวณยอดเงิน
+                                        $totalPrice = $totalPrice;
+                                        $vatStrValue = $vatValue;
 
-                                                $withholding = ($totalVat * ($withholdingValue / 100));
-                                                $totalPay = ($totalVat - $withholding);
+                                        if ($vatStrValue == 1) {
+                                            $vatStr = ($totalPrice - ($totalPrice / 1.07));
+                                            $priceNovat = ($totalPrice - $vatStr);
+                                            $totalVat = ($vatStr + $priceNovat);
+                                        } elseif ($vatStrValue == 7) {
+                                            $vatStr = ($totalPrice * (7 / 100));
+                                            $priceNovat = ($totalPrice);
+                                            $totalVat = ($vatStr + $totalPrice);
+                                        }
 
-                                                $totalPriceStr = number_format($totalPrice, 2);
-                                                $vatStr = number_format($vatStr, 2);
-                                                $priceNovatStr = number_format($priceNovat, 2);
-                                                $totalVatStr = number_format(($totalVat), 2);
-                                                $withholdingStr = number_format(($totalPrice * ($withholdingValue / 100)), 2);
-                                                $totalPayStr = number_format(($totalVat - $withholding), 2);
-                                            } //end if
+                                        $withholding = ($totalVat * ($withholdingValue / 100));
+                                        $totalPay = ($totalVat - $withholding);
+
+                                        $totalPriceStr = number_format($totalPrice, 2);
+                                        $vatStr = number_format($vatStr, 2);
+                                        $priceNovatStr = number_format($priceNovat, 2);
+                                        $totalVatStr = number_format(($totalVat), 2);
+                                        $withholdingStr = number_format(($totalPrice * ($withholdingValue / 100)), 2);
+                                        $totalPayStr = number_format(($totalVat - $withholding), 2);
+                                    } //end if
 
 
-                                            if ($countOfService > 0) {
-                                                ?>
+                                    if ($countOfService > 0) {
+                                        ?>
 
                                         <tr id="">
                                             <td colspan="3">รวมเป็นเงิน</td>
@@ -315,17 +314,23 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                                             <td colspan="3">ภาษีมูลค่าเพิ่ม 7%</td>
                                             <td>
                                                 <div class="">
-                                                    <select class="form-control" name="value_vat" id="value_vat" onchange="changeInvoiceVat(this)">
-                                                        <option <?php if ($vatValue == 0) { echo 'selected'; } ?> value="0">ไม่บวกภาษี</option>
-                                                        <option <?php if ($vatValue == 7) { echo 'selected'; } ?> value="7">Vat นอก</option>
-                                                        <option <?php if ($vatValue == 1) { echo 'selected'; } ?> value="1">Vat ใน</option>
+                                                    <select class="" name="value_vat" id="value_vat" onchange="changeInvoiceVat(this)">
+                                                        <option <?php if ($vatValue == 0) {
+                                                                    echo 'selected';
+                                                                } ?> value="0">ไม่บวกภาษี</option>
+                                                        <option <?php if ($vatValue == 7) {
+                                                                    echo 'selected';
+                                                                } ?> value="7">Vat นอก</option>
+                                                        <option <?php if ($vatValue == 1) {
+                                                                    echo 'selected';
+                                                                } ?> value="1">Vat ใน</option>
                                                     </select>
                                                 </div>
                                             </td>
                                             <td><input type="text" readonly class="form-control-plaintext form-control-sm" id="vat" name="vat" value="<?= $vatStr ?>"></td>
                                         </tr>
                                         <tr>
-                                            
+
                                             <td colspan="3">ราคาไม่รวมภาษีมูลค่าเพิ่ม</td>
                                             <td></td>
                                             <td><input type="text" readonly class="form-control-plaintext form-control-sm" id="priceNovatStr" name="priceNovatStr" value="<?= $priceNovatStr ?>"></td>
@@ -352,8 +357,8 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                                 </tbody>
                             </table>
                             <div class="col text-center">
-                                <button id="saveInvoice" type="button" class="btn btn-sm btn-success" onclick="return confirm_print('ยืนยันการบันบึก!')"><i class="fad fa-print"></i> Print</button>
-                                <button id="printInvoice" name="ok_head" style="display: none" type="button" class="btn btn-sm btn-primary" onclick="fxprintInvoice()"><i class="fad fa-print"></i> Print</button>
+                                <button type="button" class="btn btn-sm btn-success" onclick="return confirm_print('ยืนยันการบันบึก!')" id="saveInvoice"><i class="fad fa-print"></i> Print</button>
+                                <button style="display: none" type="button" class="btn btn-sm btn-primary" onclick="fxprintInvoice()" id="printInvoice" name="printInvoice"><i class="fad fa-print"></i> Print</button>
                             </div>
                             <div class="col text-center text-success" style="display: none" id="printSuccess">
                                 <b><i class="fad fa-check"></i>success</b>
@@ -484,15 +489,44 @@ $url_str =  $_SERVER['REQUEST_URI'];
 
 
 if (isset($_POST['ok_head'])) {
-    $sql_insert = "INSERT INTO `invoice`(`inv_status`, `inv_cus_id`, `inv_name`, `inv_tel`, `inv_taxno`, `inv_address`, `inv_company`, `inv_email`, `invNo_prefix`, `invNo_y`, `invNo_m`, `invNo_count`, `invNo_all`, `inv_date`) 
-        VALUES ('0','$_POST[cus_id]','$_POST[cus_name]','$_POST[cus_tel]','$_POST[cus_taxno]','$_POST[cus_address]','$_POST[cus_company]','$_POST[cus_mail]','$_POST[inv_prefix]','$_POST[inv_y]','$_POST[inv_m]','$_POST[inv_count]','$_POST[inv_all]','$_POST[inv_date]')";
-    $qr_insert = $conn->query($sql_insert);
-    if ($qr_insert) {
-        $last_insert_id = $conn->insert_id;
-        header("location:" . $url_str . "&inv=" . $last_insert_id);
+    if ($inv_id != 0) {
+        $sql_updateHead = "UPDATE invoice SET `inv_name`='$_POST[cus_name]', `inv_tel`='$_POST[cus_tel]', `inv_taxno`='$_POST[cus_taxno]', `inv_address`='$_POST[cus_address]', `inv_company`='$_POST[cus_company]', `inv_email`='$_POST[cus_mail]' WHERE inv_id = $inv_id";
+        $qr_updateHead = $conn->query($sql_updateHead);
+        if ($qr_updateHead) {
+            echo '<script>
+            swal({
+              title: "Success!",
+              text: "บันทึกข้อมูลสำเร็จ",
+              icon: "success"
+            }).then(function() {
+                window.location = "'.$url_str.'";
+            });
+          </script>';
+        } else {
+            echo '<script>
+            swal({
+              title: "บันทึกไม่สำเร็จ",
+              text: "'.$conn->error.'",
+              icon: "error"
+            }).then(function() {
+              window.location = "'.$url_str.'";
+            });
+          </script>';
+        }
     } else {
-        echo $conn->error;
-        echo '<script>document.getElementById("alert-Duplicate").style.display="block"</script>';
+        $sql_insert = "INSERT INTO `invoice`(`inv_status`, `inv_cus_id`, `inv_name`, `inv_tel`, `inv_taxno`, `inv_address`, `inv_company`, `inv_email`, `invNo_prefix`, `invNo_y`, `invNo_m`, `invNo_count`, `invNo_all`, `inv_date`) 
+        VALUES ('0','$_POST[cus_id]','$_POST[cus_name]','$_POST[cus_tel]','$_POST[cus_taxno]','$_POST[cus_address]','$_POST[cus_company]','$_POST[cus_mail]','$_POST[inv_prefix]','$_POST[inv_y]','$_POST[inv_m]','$_POST[inv_count]','$_POST[inv_all]','$_POST[inv_date]')";
+        $qr_insert = $conn->query($sql_insert);
+        echo "insert";
+        if ($qr_insert) {
+            $last_insert_id = $conn->insert_id;
+            header("location:" . $url_str . "&inv=" . $last_insert_id);
+        } else {
+            echo $conn->error;
+            echo '<script>document.getElementById("alert-Duplicate").style.display="block";
+            console.log(' . $conn->error . ');
+        </script>';
+        }
     }
 }
 
