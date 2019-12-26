@@ -56,11 +56,10 @@ $result=$conn->query($sql);
               <td width="5%"><button class="btn btn-info" type="submit" name="button">พิมพ์</button></td>
             </tr>
           </tbody>
-        <? } ?>
+        <?php } ?>
         </table>
       </div>
     </div>
   </div>
 </body>
-
 </html>

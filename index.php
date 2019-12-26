@@ -1,14 +1,14 @@
 <?php
 
-include("config.php");
-ob_start(); 
+require "config.php";
+ob_start();
 session_start();
 if (isset($_SESSION['login_true']) == "") {
   echo "<meta http-equiv=refresh content=0;URL=login.php>";
 } else {
   require('all_function.php');
   date_default_timezone_set("Asia/Bangkok");
-  ?>
+?>
 
   <!DOCTYPE html>
   <html lang="en">
@@ -60,7 +60,7 @@ if (isset($_SESSION['login_true']) == "") {
     </style>
 
 
-    
+
 
     <!-- Bootstrap core JavaScript -->
 
@@ -71,6 +71,14 @@ if (isset($_SESSION['login_true']) == "") {
     <script type="text/javascript" src="vendor\datetimepicker\jquery.datetimepicker.full.js" charset="utf-8"></script>
     <!-- <script src="js/sweetalert2.all.min.js"></script> -->
     <script src="js/sweetalert.min.js" type="text/javascript" charset="utf-8" async defer></script>
+
+    <!-- sweet alert2  -->
+    <link rel="stylesheet" href="node_modules/@sweetalert2/theme-bootstrap-4/bootstrap-4.min.css">
+    <script src="node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <!-- <script src="node_modules/sweetalert2/dist/promise-polyfill.js"></script> -->
+
+
+    <!-- font awesome pro  -->
     <script src="js/fontawesome-pro.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
 
@@ -78,8 +86,8 @@ if (isset($_SESSION['login_true']) == "") {
 
   <body>
     <?php
-      $status = isset($_SESSION['login_status']) ? $_SESSION['login_status'] : '';
-      ?>
+    $status = isset($_SESSION['login_status']) ? $_SESSION['login_status'] : '';
+    ?>
     <div class="d-flex" id="wrapper">
       <!-- Sidebar -->
       <div class="bg-light border-right" id="sidebar-wrapper">
@@ -109,7 +117,7 @@ if (isset($_SESSION['login_true']) == "") {
             <a href="../gps-shop/" target="_BLANK" class="list-group-item list-group-item-action bg-light px-5">
               <i class="fas fa-cart-plus"></i> GPS Shop</a>
             <a href="?p=invoice_main" target="" class="list-group-item list-group-item-action bg-light px-5">
-              <i class="fas fa-cart-plus"></i> Invoice</a>
+              <i class="fas fa-cart-plus"></i> ใบเสร็จ</a>
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-0 text-muted">
               Masterfiles</h6>
             <a href="?p=masterdlt" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-file-word"></i> Masterfile ขนส่ง</a>
@@ -150,162 +158,162 @@ if (isset($_SESSION['login_true']) == "") {
         <!-- content -->
         <div class="container-fluid">
           <?php
-            // error_reporting(~E_NOTICE);
-            $page = isset($_GET['p']) ? $_GET['p'] : '';
-            switch ($page) {
-                // member Mange
-              case 'edit':
-                require_once('edit.php');
-                break;
-              case 'detail':
-                require_once('detail.php');
-                break;
-              case 'canceler':
-                require_once('canceler.php');
-                break;
-              case 'canceler_service':
-                require_once('canceler_service.php');
-                break;
+          // error_reporting(~E_NOTICE);
+          $page = isset($_GET['p']) ? $_GET['p'] : '';
+          switch ($page) {
+              // member Mange
+            case 'edit':
+              include_once 'edit.php';
+              break;
+            case 'detail':
+              include_once 'detail.php';
+              break;
+            case 'canceler':
+              include_once 'canceler.php';
+              break;
+            case 'canceler_service':
+              include_once 'canceler_service.php';
+              break;
 
-              case 'main_admin':
-                require_once('member_detail.php');
-                break;
-              case 'main_tech':
-                require_once('member_detail_tech.php');
-                break;
-              case 'add_member':
-                require_once('add_member.php');
-                break;
-              case 'add_member2':
-                require_once('add_member2.php');
-                break;
-              case 'add_member_tech':
-                require_once('add_member_tech.php');
-                break;
-              case 'bill':
-                require_once('bill.php');
-                break;
-              case 'bill':
-                require_once('bill.php');
-                break;
-              case 'sim':
-                require_once('sim.php');
-                break;
-              case 'report':
-                require_once('report/report.php');
-                break;
-              case 'barcode':
-                require_once('barcode_form.php');
-                break;
+            case 'main_admin':
+              include_once 'member_detail.php';
+              break;
+            case 'main_tech':
+              include_once 'member_detail_tech.php';
+              break;
+            case 'add_member':
+              include_once 'add_member.php';
+              break;
+            case 'add_member2':
+              include_once 'add_member2.php';
+              break;
+            case 'add_member_tech':
+              include_once 'add_member_tech.php';
+              break;
+            case 'bill':
+              include_once 'bill.php';
+              break;
+            case 'bill':
+              include_once 'bill.php';
+              break;
+            case 'sim':
+              include_once 'sim.php';
+              break;
+            case 'report':
+              include_once 'report/report.php';
+              break;
+            case 'barcode':
+              include_once 'barcode_form.php';
+              break;
 
 
-                // report
-              case 'reportSetup':
-                require('report/report_setup.php');
-                break;
-              case 'reportCancel':
-                require_once('report/report_cancel.php');
-                break;
+              // report
+            case 'reportSetup':
+              include_once 'report/report_setup.php';
+              break;
+            case 'reportCancel':
+              include_once 'report/report_cancel.php';
+              break;
 
-                // invoice
-              case 'invoice_main':
-                require_once('invoice/invoice.php');
-                break;
-              case 'invoice_add':
-                require_once('invoice/invoice_add.php');
-                break;
+              // invoice
+            case 'invoice_main':
+              include_once 'invoice/invoice.php';
+              break;
+            case 'invoice_add':
+              include_once 'invoice/invoice_add.php';
+              break;
 
-                // offline report
-              case 'off_list':
-                require_once('report_offline/offline_report_list.php');
-                break;
-              case 'off_form':
-                require_once('report_offline/offline_report_form.php');
-                break;
+              // offline report
+            case 'off_list':
+              include_once 'report_offline/offline_report_list.php';
+              break;
+            case 'off_form':
+              include_once 'report_offline/offline_report_form.php';
+              break;
 
-                //report Conclude
-              case 'conclude_setup':
-                require_once('report_conclude/conclude_setup.php');
-                break;
-              case 'old_data':
-                require_once('report_conclude/old_data.php');
-                break;
+              //report Conclude
+            case 'conclude_setup':
+              include_once 'report_conclude/conclude_setup.php';
+              break;
+            case 'old_data':
+              include_once 'report_conclude/old_data.php';
+              break;
 
-                //report Model
-              case 'report_model':
-                require_once('report_model/index.php');
-                break;
+              //report Model
+            case 'report_model':
+              include_once 'report_model/index.php';
+              break;
 
-                // send masterfile
-              case 'sendmaster':
-                require_once('send_masterfile.php');
-                break;
-                //send realtime
-              case 'sendreal':
-                require_once('send_realtime.php');
-                break;
+              // send masterfile
+            case 'sendmaster':
+              include_once 'send_masterfile.php';
+              break;
+              //send realtime
+            case 'sendreal':
+              include_once 'send_realtime.php';
+              break;
 
-                // -------------setip-----------------
-              case 'setip':
-                require_once('setip/index.php');
-                break;
-              case 'setipadd':
-                require_once('setip/set_ipadd.php');
-                break;
-              case 'setiplist':
-                require_once('setip/set_iplist.php');
-                break;
-              case 'setipedit':
-                require_once('setip/set_ipedit.php');
-                break;
-              case 'setcommand':
-                require_once('setip/set_command.php');
-                break;
-              case 'setvt900':
-                require_once('setip/vt900/set_vt900.php');
-                break;
-              case 'setvt900a':
-                require_once('setip/vt900a/set_vt900a.php');
-                break;
-              case 'setvt900u':
-                require_once('setip/vt900u/set_vt900u.php');
-                break;
-              case 'setgt06':
-                require_once('setip/gt06/set_gt06.php');
-                break;
+              // -------------setip-----------------
+            case 'setip':
+              include_once 'setip/index.php';
+              break;
+            case 'setipadd':
+              include_once 'setip/set_ipadd.php';
+              break;
+            case 'setiplist':
+              include_once 'setip/set_iplist.php';
+              break;
+            case 'setipedit':
+              include_once 'setip/set_ipedit.php';
+              break;
+            case 'setcommand':
+              include_once 'setip/set_command.php';
+              break;
+            case 'setvt900':
+              include_once 'setip/vt900/set_vt900.php';
+              break;
+            case 'setvt900a':
+              include_once 'setip/vt900a/set_vt900a.php';
+              break;
+            case 'setvt900u':
+              include_once 'setip/vt900u/set_vt900u.php';
+              break;
+            case 'setgt06':
+              include_once 'setip/gt06/set_gt06.php';
+              break;
 
-              case 'promotion':
-                require_once('promotion/index.php');
-                break;
-              case 'promotionadd':
-                require_once('promotion/promo_add.php');
-                break;
-              case 'promotionedit':
-                require_once('promotion/promo_edit.php');
-                break;
-                // Masterfile 
-              case 'masterdlt':
-                require_once('masterfiles/masterfile_getlist_dlt.php');
-                break;
-              case 'masterpost':
-                require_once('masterfiles/masterfile_getlist_post.php');
-                break;
+            case 'promotion':
+              include_once 'promotion/index.php';
+              break;
+            case 'promotionadd':
+              include_once 'promotion/promo_add.php';
+              break;
+            case 'promotionedit':
+              include_once 'promotion/promo_edit.php';
+              break;
+              // Masterfile 
+            case 'masterdlt':
+              include_once 'masterfiles/masterfile_getlist_dlt.php';
+              break;
+            case 'masterpost':
+              include_once 'masterfiles/masterfile_getlist_post.php';
+              break;
 
-              case 'action_addMember':
-                require_once('action_addMember.php');
-                break;
-              case 'action_addMember_tech':
-                require_once('action_addMember_tech.php');
-                break;
-              default:
+            case 'action_addMember':
+              include_once 'action_addMember.php';
+              break;
+            case 'action_addMember_tech':
+              include_once 'action_addMember_tech.php';
+              break;
+            default:
               if ($status == "admin") {
-                include('member_detail.php') ;
-              }elseif($status == "admin"){
-                include('member_detail_tech.php') ;
+                include('member_detail.php');
+              } elseif ($status == "admin") {
+                include('member_detail_tech.php');
               }
-            break;
-            }
-            ?>
+              break;
+          }
+          ?>
         </div>
         <!-- <div class="container-fluid"> -->
       </div>

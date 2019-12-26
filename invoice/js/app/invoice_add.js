@@ -1,12 +1,36 @@
 function confirm_print() {
-  let y = confirm("ยืนยันการปริ้น");
+  var y = confirm("ยืนยันการปริ้น");
   if (y == true) {
     setInvoiceTotal();
   }
 }
 
+function confirm_swal2() {
+  var form = document.getElementById('form-service');
+  var isValidForm = form.checkValidity();
+  if (isValidForm) {
+    form
+  }
+  // Swal.fire({
+  //   text: 'ยืนยันการปริ้น',
+  //   icon: 'info',
+  //   showCancelButton: true,
+  //   showCancelButton: true,
+  //   confirmButtonColor: '#3085d6',
+  //   cancelButtonColor: '#d33',
+  //   confirmButtonText: 'ยินยันการปริ้น',
+  //   cancelButtonText: 'ยกเลิก'
+
+  // }).then((result) => {
+  //   if (result.value) {
+  //     setInvoiceTotal();
+  //   }
+  // });
+  console.log(isValidForm)
+}
+
 function getAddressCus(value) {
-  let id_value = value;
+  var id_value = value;
   // console.log(id_value);
   function getDataJson() {
     $.ajax({
@@ -15,7 +39,7 @@ function getAddressCus(value) {
       data: { param_id: id_value },
       success: function(data) {
         //   console.log(data);
-        let result = JSON.parse(data);
+        var result = JSON.parse(data);
         document.getElementById("cus_id").value = result.cus_id;
         document.getElementById("cus_address").innerHTML = result.cus_address;
         document.getElementById("cus_taxno").value = result.cus_taxno;
@@ -33,11 +57,11 @@ function getAddressCus(value) {
 // change invoice number
 function changeinvNumber(dateValue) {
   // alert("come");
-  // let dateValue = document.getElementById("customer").value;
-  let date = dateValue.split("-");
-  let day = date[0];
-  let month = date[1];
-  let year = date[2] - 543;
+  // var dateValue = document.getElementById("customer").value;
+  var date = dateValue.split("-");
+  var day = date[0];
+  var month = date[1];
+  var year = date[2] - 543;
   //   console.log(day + month + year);
   function getNumber() {
     //   alert("getnumber");
@@ -48,7 +72,7 @@ function changeinvNumber(dateValue) {
       // data: { param_id: id_value },
       success: function(data) {
         console.log(data);
-        let inv_data = JSON.parse(data);
+        var inv_data = JSON.parse(data);
         document.getElementById("dateThai").value = inv_data.dateThai;
         document.getElementById("inv_date").value = inv_data.dateEng;
         document.getElementById("alert-show").innerHTML = inv_data.all;
@@ -68,7 +92,7 @@ checkurl();
 function checkurl() {
   const getParam = getSearchParameters();
   // if have parameter name is inv
-  if (getParam["inv"]) {
+  if (getParam.inv) {
     // alert('have')
 
     document.getElementById("cus_address").readOnly = "true";
@@ -97,14 +121,14 @@ function transformToAssocArray(prmstr) {
     var tmparr = prmarr[i].split("=");
     params[tmparr[0]] = tmparr[1];
   }
-  console.log(params);
+  // console.log(params);
   return params;
 }
 
 function checkFrm() {
   const inv_id = document.inv_head.inv_id;
-//   console.log(inv_id);
-//   inv_id = 0 is create new HEad 
+  //   console.log(inv_id);
+  //   inv_id = 0 is create new HEad
   if (inv_id.value == 0) {
     const customerSelect = document.inv_head.customer;
     const billDate = document.inv_head.billDate;
@@ -116,15 +140,14 @@ function checkFrm() {
       billDate.focus();
       alert("กรุณาเลือกวันที่ก่อนครับ");
       return false;
-    }else{
-        return true;
+    } else {
+      return true;
     }
-  }else{
+  } else {
     return true;
   }
 
   // console.log(customerSelect);
-  
 }
 
 function changeServiceDetail(id, data) {
@@ -178,7 +201,7 @@ function changeServiceTotal(id, data) {
 
 function changeInvoiceVat(ele) {
   const invId = document.getElementById("inv_id").value;
-  let vatValue = ele.value;
+  var vatValue = ele.value;
 
   function setDataVat() {
     $.ajax({
@@ -198,7 +221,7 @@ function changeInvoiceVat(ele) {
 
 function changeInvoiceWithholding(ele) {
   const invId = document.getElementById("inv_id").value;
-  let withholding = ele;
+  var withholding = ele;
   console.log(withholding);
 
   function setDatawithholding() {
@@ -248,7 +271,7 @@ function setInvoiceTotal() {
 }
 
 function updateTotalPrice() {
-  let vatValue = 0;
+  var vatValue = 0;
   const invId = document.getElementById("inv_id").value;
   const vat = document.getElementById("value_vat");
   const withhodingValue = document.getElementById("value_withholding").value;
@@ -262,13 +285,13 @@ function updateTotalPrice() {
     data: { inv_id: invId },
     success: function(result) {
       console.log(result);
-      let data = JSON.parse(result);
+      var data = JSON.parse(result);
       document.getElementById("totalPrice").value = data.price;
       document.getElementById("vat").value = data.vat;
       document.getElementById("totalVat").value = data.priceSum;
       document.getElementById("inv_withholding").value = data.withholding;
       document.getElementById("totalPay").value = data.totalPay;
-      let thaibath = "(" + BAHTTEXT(data.priceSum) + ")";
+      var thaibath = "(" + BAHTTEXT(data.priceSum) + ")";
       document.getElementById("bahtText").innerHTML = thaibath;
     }
   });
@@ -415,7 +438,7 @@ function editCustomer() {
   document.getElementById("cus_company").readOnly = false;
   document.getElementById("cus_name").readOnly = false;
   document.getElementById("cus_tel").readOnly = false;
-//   document.getElementById("cus_user").readOnly = false;
+  //   document.getElementById("cus_user").readOnly = false;
   document.getElementById("cus_mail").readOnly = false;
 
   // hide service list
@@ -427,4 +450,34 @@ function editCustomer() {
 
   // hide edit_customer button
   document.getElementById("edit_cus").style.display = "none";
+}
+
+function swal2Success(url) {
+  Swal.fire({
+    icon: "success",
+    text: "แก้ไขข้อมูลสำเร็จ",
+    showConfirmButton: false,
+    timer: 1500
+  }).then(result => {
+    window.location = url;
+  });
+}
+
+function swal2Error(msg, url) {
+  var msgArray = msg.split(" ");
+  console.log(msgArray);
+  if (msgArray["0"] == "Duplicate") {
+    swal2Show("เพิ่มรายการไม่สำเร็จ", "รายการที่เลือกซ้ำ")
+  }else{
+
+  }
+  function swal2Show(title,massage) {
+    Swal.fire({
+      icon: "error",
+      title: title,
+      text: massage,
+      showConfirmButton: true,
+      backdrop: `rgba(0,0,123,0.4)`
+    });
+  }
 }

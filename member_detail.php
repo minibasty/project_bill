@@ -251,14 +251,12 @@ LEFT JOIN `canceler_service` ON `canceler_service`.`member_id` = `member`.`id` "
               if ($result && $result->num_rows > 0) {  // คิวรี่ข้อมูลสำเร็จหรือไม่ และมีรายการข้อมูลหรือไม่
                 while ($row = $result->fetch_array()) { // วนลูปแสดงรายการ
                   $num++;
-
                   if (!empty($row['id_cancelS'])) {
                     echo '<tr class="text-center text-danger">';
                   } else {
                     echo '<tr class="text-center">';
                   }
                   ?>
-
                   <!--////////////// button -->
                   <td class="text-center">
                     <form action="" method="post">
@@ -282,7 +280,8 @@ LEFT JOIN `canceler_service` ON `canceler_service`.`member_id` = `member`.`id` "
                   <td class="text-left">
                     <div title="<?= $row['name'] ?>"><?= mb_strimwidth($row['name'], 0, 30, '...', 'UTF-8'); ?></div>
                   </td>
-                  <td scope="row"><?= $row['zipcode'] ?><font style="color: blue;"> (<?= $row['tech'] ?>)</td>
+                  <td scope="row"><?= $row['zipcode']; ?><font style="color: blue;"> (<?= $row['tech'] ?>)</td>
+                
                   <td><?= $row['amper'] ?> </td>
                   <td class="text-left">
                     <div title="<?= $row['user'] ?>"><?= mb_strimwidth($row['user'], 0, 10, '...', 'UTF-8'); ?></div>
