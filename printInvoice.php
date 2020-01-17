@@ -46,7 +46,7 @@
 <table class="table-sm" border="0" cellpadding="0" cellspacing="0" style="width:100%">
   <tr>
     <td colspan="" style="width: 65%"><img src="img/logo.jpg" width="" height="10%"></td>
-    <td colspan="2" ><p style="font-size:32px;">ใบกำกับภาษี/ใบเสร็จรับเงิน</p><p style="font-size:26px">&nbsp;&nbsp;&nbsp;ต้นฉบับ(เอกสารออกเป็นชุด)</p></td>
+    <td colspan="2" ><p style="font-size:32px;">ใบแจ้งหนี้</p><p style="font-size:26px">&nbsp;&nbsp;&nbsp;ต้นฉบับ(เอกสารออกเป็นชุด)</p></td>
   </tr>
   <tr>
     <td colspan=""><p>บริษัท มิรดา คอร์ปอเรชั่น จำกัด</p>
