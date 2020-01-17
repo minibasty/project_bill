@@ -33,7 +33,7 @@
             var toDay = d.getDate() + '-' + (d.getMonth() + 1) + '-' + (d.getFullYear() + 543);
 
             // กรณีต้องการใส่ปฏิทินลงไปมากกว่า 1 อันต่อหน้า ก็ให้มาเพิ่ม Code ที่บรรทัดด้านล่างด้วยครับ (1 ชุด = 1 ปฏิทิน)
-            console.log(toDay);
+            // console.log(toDay);
             $(".calander").datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -485,8 +485,8 @@
                             <?php $bill = ($rows['bill']);
                             $billAmout = ($rows['service_charge'] * $rows['bill_cycle']);
                             ?>
-                            <label for="service">ยอดก่อน Vat</label>
-                            <input type="service" class="form-control form-control-sm" autocomplete="off" name="service_charge" id="beforecollect" onkeypress="return chkNumber(this)" value="<?= $rows['service_charge']; ?>">
+                            <label for="service_charge">ยอดก่อน Vat</label>
+                            <input type="service_charge" class="form-control form-control-sm" autocomplete="off" name="service_charge" id="service_charge" onkeypress="return chkNumber(this)" value="<?= $rows['service_charge']; ?>">
                             <small class="t-red">กรอกเป็นยอดต่อเดือน</small>
                         </div>
                         <div class="form-group col-md-3">
