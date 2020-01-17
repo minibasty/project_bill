@@ -525,3 +525,5 @@ function swal2Error(msg, url) {
     });
   }
 }
+
+
