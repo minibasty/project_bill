@@ -343,7 +343,7 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                                             <td style="width: auto;">
                                                 <input type="text" onkeypress="return chkNumber(this)" onchange="changeInvoiceWithholding(this.value)" name="value_withholding" id="value_withholding" class="form-control form-control-sm" size="2" value="<?php echo $withholdingValue ?>">
                                             </td>
-                                            <td><input type="text" readonly class="form-control-plaintext form-control-sm" id="inv_withholding" name="inv_withholding" value="<?php echo $withholding ?>"></td>
+                                            <td><input type="text" readonly class="form-control-plaintext form-control-sm" id="withholding" name="withholding" value="<?php echo $withholding ?>"></td>
                                         </tr>
                                         <tr>
                                             <td colspan="3">ยอดชำระ</td>
@@ -354,8 +354,9 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                                 </tbody>
                             </table>
                             <div class="col text-center">
-                                <button type="button" class="btn btn-sm btn-success" onclick="return confirm_swal2()" id="saveInvoice"><i class="fad fa-print"></i> Print</button>
-                                <button style="display: none" type="button" class="btn btn-sm btn-primary" onclick="fxprintInvoice()" id="printInvoice" name="printInvoice"><i class="fad fa-print"></i> Print</button>
+                                <button type="button" class="btn btn-sm btn-success" onclick="return confirm_swal2(this)" id="printBill"><i class="fad fa-print"></i> Print</button>
+                                <button type="button" class="btn btn-sm btn-success" onclick="return confirm_swal2(this)" id="printInvoice"><i class="fad fa-print"></i> Print</button>
+                                <!-- <button style="display: none" type="button" class="btn btn-sm btn-primary" onclick="fxprintInvoice()" id="printInvoice" name="printInvoice"><i class="fad fa-print"></i> Print</button> -->
                             </div>
                             <div class="col text-center text-success" style="display: none" id="printSuccess">
                                 <b><i class="fad fa-check"></i>success</b>

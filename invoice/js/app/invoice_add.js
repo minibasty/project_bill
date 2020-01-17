@@ -6,28 +6,42 @@ function confirm_print() {
   }
 }
 
-function confirm_swal2() {
+function confirm_swal2(ele) {
+
   var form = document.getElementById('form-service');
   var isValidForm = form.checkValidity();
-  if (isValidForm) {
-    form
-  }
-  Swal.fire({
-    text: 'ยืนยันการปริ้น',
-    icon: 'info',
-    showCancelButton: true,
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'ยินยันการปริ้น',
-    cancelButtonText: 'ยกเลิก'
+  if (isValidForm === false) {
+    console.log(isValidForm)
+    Swal.fire({
+      text: 'กรุณากรอกยอดเงิน',
+      icon: 'error',
+      // showCancelButton: true,
+      confirmButtonColor: '#ff8080',
+      confirmButtonText: 'ปิด'
 
-  }).then((result) => {
-    if (result.value) {
-      setInvoiceTotal();
-    }
-  });
-  console.log(isValidForm)
+    }).then((result) => {
+      if (result.value) {
+        setInvoiceTotal(ele.id);
+      }
+    });
+  } else {
+    Swal.fire({
+      text: 'ยืนยันการปริ้น',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ยินยันการปริ้น',
+      cancelButtonText: 'ยกเลิก'
+
+    }).then((result) => {
+      if (result.value) {
+        setInvoiceTotal(ele.id);
+      }
+    });
+  }
+
+
 }
 
 function getAddressCus(value) {
@@ -37,8 +51,10 @@ function getAddressCus(value) {
     $.ajax({
       type: "POST",
       url: "invoice/model/model_customer.php",
-      data: { param_id: id_value },
-      success: function(data) {
+      data: {
+        param_id: id_value
+      },
+      success: function (data) {
         //   console.log(data);
         var result = JSON.parse(data);
         document.getElementById("cus_id").value = result.cus_id;
@@ -69,9 +85,13 @@ function changeinvNumber(dateValue) {
     $.ajax({
       type: "POST",
       url: "invoice/model/model_invoiceNumber.php",
-      data: { day: day, month: month, year: year },
+      data: {
+        day: day,
+        month: month,
+        year: year
+      },
       // data: { param_id: id_value },
-      success: function(data) {
+      success: function (data) {
         console.log(data);
         var inv_data = JSON.parse(data);
         document.getElementById("dateThai").value = inv_data.dateThai;
@@ -90,6 +110,7 @@ function changeinvNumber(dateValue) {
 }
 // check Param get
 checkurl();
+
 function checkurl() {
   const getParam = getSearchParameters();
   // if have parameter name is inv
@@ -158,12 +179,15 @@ function changeServiceDetail(id, data) {
     $.ajax({
       type: "POST",
       url: "invoice/model/model_changeService_detail.php",
-      data: { id: id, detail: data },
-      success: function(result) {
+      data: {
+        id: id,
+        detail: data
+      },
+      success: function (result) {
         const x = document.getElementById(eleOk);
         if (result == "ok") {
           x.style.display = "inline";
-          setTimeout(function() {
+          setTimeout(function () {
             x.style.display = "none";
           }, 2000);
         }
@@ -183,12 +207,15 @@ function changeServiceTotal(id, data) {
     $.ajax({
       type: "POST",
       url: "invoice/model/model_changeService_total.php",
-      data: { id: id, total: data },
-      success: function(result) {
+      data: {
+        id: id,
+        total: data
+      },
+      success: function (result) {
         const x = document.getElementById(eleOk);
         if (result == "ok") {
           x.style.display = "inline";
-          setTimeout(function() {
+          setTimeout(function () {
             x.style.display = "none";
           }, 1000);
           updateTotalPrice();
@@ -208,8 +235,11 @@ function changeInvoiceVat(ele) {
     $.ajax({
       type: "POST",
       url: "invoice/model/model_changeInvoice_vat.php",
-      data: { id: invId, vat: vatValue },
-      success: function(result) {
+      data: {
+        id: invId,
+        vat: vatValue
+      },
+      success: function (result) {
         console.log(result);
         if (result == "ok") {
           updateTotalPrice();
@@ -229,8 +259,11 @@ function changeInvoiceWithholding(ele) {
     $.ajax({
       type: "POST",
       url: "invoice/model/model_changeInvoice_withholding.php",
-      data: { id: invId, withholding: withholding },
-      success: function(result) {
+      data: {
+        id: invId,
+        withholding: withholding
+      },
+      success: function (result) {
         console.log(result);
         if (result == "ok") {
           updateTotalPrice();
@@ -241,28 +274,33 @@ function changeInvoiceWithholding(ele) {
   setDatawithholding();
 }
 
-function setInvoiceTotal() {
+function setInvoiceTotal(eleId) {
   const invId = document.getElementById("inv_id").value;
   const totalPay = document.getElementById("totalPay").value;
+
   if (totalPay > 0) {
     setTotalInvoice();
   }
+
   function setTotalInvoice() {
     $.ajax({
       type: "POST",
       url: "invoice/model/model_changeInvoice_total.php",
-      data: { id: invId, totalpay: totalPay },
-      success: function(result) {
+      data: {
+        id: invId,
+        totalpay: totalPay
+      },
+      success: function (result) {
         console.log(result);
         if (result == "ok") {
-          getPdf();
+          getPdf(eleId);
         }
       }
     });
   }
 
-  function getPdf() {
-    window.open("invoice_pdf.php?inv_id=" + invId, "_blank");
+  function getPdf(filename) {
+    window.open(filename + ".php?inv_id=" + invId, "_blank");
     showSuccessprint();
   }
 
@@ -283,14 +321,17 @@ function updateTotalPrice() {
   $.ajax({
     type: "POST",
     url: "invoice/model/model_updateService_total.php",
-    data: { inv_id: invId },
-    success: function(result) {
+    data: {
+      inv_id: invId
+    },
+    success: function (result) {
       console.log(result);
       var data = JSON.parse(result);
       document.getElementById("totalPrice").value = data.price;
       document.getElementById("vat").value = data.vat;
+      document.getElementById("priceNovatStr").value = data.priceNovat;
       document.getElementById("totalVat").value = data.priceSum;
-      document.getElementById("inv_withholding").value = data.withholding;
+      document.getElementById("withholding").value = data.withholding;
       document.getElementById("totalPay").value = data.totalPay;
       var thaibath = "(" + BAHTTEXT(data.priceSum) + ")";
       document.getElementById("bahtText").innerHTML = thaibath;
@@ -421,8 +462,10 @@ function setInvoiceData() {
     $.ajax({
       type: "POST",
       url: "invoice/invoice_pdf.php",
-      data: { id: invId },
-      success: function(result) {
+      data: {
+        id: invId
+      },
+      success: function (result) {
         // console.log(result);
         alert(result);
       }
@@ -469,10 +512,11 @@ function swal2Error(msg, url) {
   console.log(msgArray);
   if (msgArray["0"] == "Duplicate") {
     swal2Show("เพิ่มรายการไม่สำเร็จ", "รายการที่เลือกซ้ำ")
-  }else{
+  } else {
 
   }
-  function swal2Show(title,massage) {
+
+  function swal2Show(title, massage) {
     Swal.fire({
       icon: "error",
       title: title,

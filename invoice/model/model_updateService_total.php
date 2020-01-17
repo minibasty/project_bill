@@ -17,7 +17,6 @@
     }
 
     $price = number_format($price,2 , '.', '');
-    
     $vatStr = $row_invoice['inv_vat'];
     if ($vatStr==1) {
         $vat = number_format(($price-($price / 1.07)),2 , '.', '');
@@ -37,6 +36,7 @@
     $dataArr= array(
         'price' => $price, 
         'vat' => $vat,
+        'priceNovat' => $priceNovat,
         'priceSum' => $priceSum,
         'withholding' => $withholding,
         'totalPay' => $totalPay,
