@@ -19,5 +19,7 @@ function addNew($fileName, $line, $max) {
 
     // Save Result
     file_put_contents($fileName, implode(PHP_EOL, array_filter($file)));
+
+    echo "555555555555555555555555555555555555555555555555555555555555555555555555555";
 }
 ?>
