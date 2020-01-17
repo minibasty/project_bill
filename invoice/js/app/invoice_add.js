@@ -7,7 +7,6 @@ function confirm_print() {
 }
 
 function confirm_swal2(ele) {
-
   var form = document.getElementById('form-service');
   var isValidForm = form.checkValidity();
   if (isValidForm === false) {
