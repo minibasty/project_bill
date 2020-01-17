@@ -99,7 +99,7 @@ if (isset($_SESSION['login_true']) == "") {
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-0 text-muted">
               เพิ่มข้อมูล</h6>
             <a href="?p=add_member" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-plus"></i> เพิ่มข้อมูล #1</a>
-            <a href="?p=add_member2" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-plus"></i> เพิ่มข้อมูล #2</a>
+            <!-- <a href="?p=add_member2" class="list-group-item list-group-item-action bg-light px-5"> <i class="fas fa-plus"></i> เพิ่มข้อมูล #2</a> -->
 
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-0 text-muted">
               ระบบจัดการ</h6>
@@ -180,6 +180,9 @@ if (isset($_SESSION['login_true']) == "") {
               break;
             case 'main_tech':
               include_once 'member_detail_tech.php';
+              break;
+            case 'main_dealer':
+              include_once 'member_detail_dealer.php';
               break;
             case 'add_member':
               include_once 'add_member.php';

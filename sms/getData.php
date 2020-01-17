@@ -1,6 +1,6 @@
 <?php
 $sc = isset($_POST['data']) ? $_POST['data'] : '';
-require 'config.php';
+require 'config-sms.php';
 $strSQL = "select 
 id,
 name,

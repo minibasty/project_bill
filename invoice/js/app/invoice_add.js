@@ -1,6 +1,7 @@
 function confirm_print() {
   var y = confirm("ยืนยันการปริ้น");
   if (y == true) {
+    console.log("come On !!!!!!")
     setInvoiceTotal();
   }
 }
@@ -11,21 +12,21 @@ function confirm_swal2() {
   if (isValidForm) {
     form
   }
-  // Swal.fire({
-  //   text: 'ยืนยันการปริ้น',
-  //   icon: 'info',
-  //   showCancelButton: true,
-  //   showCancelButton: true,
-  //   confirmButtonColor: '#3085d6',
-  //   cancelButtonColor: '#d33',
-  //   confirmButtonText: 'ยินยันการปริ้น',
-  //   cancelButtonText: 'ยกเลิก'
+  Swal.fire({
+    text: 'ยืนยันการปริ้น',
+    icon: 'info',
+    showCancelButton: true,
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'ยินยันการปริ้น',
+    cancelButtonText: 'ยกเลิก'
 
-  // }).then((result) => {
-  //   if (result.value) {
-  //     setInvoiceTotal();
-  //   }
-  // });
+  }).then((result) => {
+    if (result.value) {
+      setInvoiceTotal();
+    }
+  });
   console.log(isValidForm)
 }
 
