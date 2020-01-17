@@ -171,6 +171,25 @@
 </div>
 ';
 
+$detailpay = '<hr style="color: black;,margin-top: 10px ">
+<table  border="0"   cellpadding="0" cellspacing="0">
+<tr>
+<td align="left">
+<img src="img\print\qr-payment.png" width="" height="15%">
+</td>
+<td align="left" style="padding-left:10px">
+ธนาคาร สำหรับการแจ้งโอนเงิน <br>
+เลขบัญชี 414-239-2785 || ชื่อบัญชี บจก.มิรดา คอร์ปอเรชั่น
+ธนาคารกสิกร สาขา สี่แยกสนามบินเชียงใหม่<br>
+<b>โอนเงินแล้ว ต้องถ่ายสลิป ส่งไปที่ไลน์บริษัท</b>
+</td>
+<td align="right">
+<img src="img\print\line@greenboxgps.png" width="" height="15%">
+</td>
+</tr>
+
+</table>'
+
 
   ?>
 
@@ -191,7 +210,9 @@
   $mpdf->writeHTML($css, 1);
 
   $mpdf->WriteHTML($contents);
-  $mpdf->SetFooter($footer);
+
+  $mpdf->WriteHTML($detailpay);
+
 
   $mpdf->Output();
   ?>
