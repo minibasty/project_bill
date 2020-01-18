@@ -354,8 +354,8 @@ $withholdingValue = isset($row_invoice['inv_withholding']) ? $row_invoice['inv_w
                                 </tbody>
                             </table>
                             <div class="col text-center">
-                                <button type="button" class="btn btn-sm btn-success" onclick="return confirm_swal2(this)" id="printBill"><i class="fad fa-print"></i> Print</button>
-                                <button type="button" class="btn btn-sm btn-success" onclick="return confirm_swal2(this)" id="printInvoice"><i class="fad fa-print"></i> Print</button>
+                                <button type="button" class="btn btn-sm btn-success" onclick="return confirm_swal2(this)" id="printBill"><i class="fad fa-print"></i>Print</button>
+                                <button type="button" class="btn btn-sm btn-success" onclick="return confirm_swal2(this)" id="printInvoice"><i class="fad fa-print"></i>ใบแจ้งหนี้</button>
                                 <!-- <button style="display: none" type="button" class="btn btn-sm btn-primary" onclick="fxprintInvoice()" id="printInvoice" name="printInvoice"><i class="fad fa-print"></i> Print</button> -->
                             </div>
                             <div class="col text-center text-success" style="display: none" id="printSuccess">
